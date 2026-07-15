@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TEAM JOSH LICENSING HUB v9.1 — MIRROR SYNC</title>
+<meta name="referrer" content="no-referrer-when-downgrade" />
+<title>TEAM JOSH LICENSING HUB v9.2.4 — GITHUB SAFE</title>
 <style>
 :root{--blue:#073b8e;--blue2:#0b5fc7;--navy:#031b45;--gold:#ffd23f;--gold2:#f5b301;--bg:#f4f8ff;--line:#d8e6fb;--text:#172033;--muted:#64748b;--red:#d62839;--green:#0fa968;--orange:#ff8c1a;--purple:#7b2cbf;--cyan:#00a7c7}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#eef5ff 0%,#fff 60%,#f8fbff 100%)}
@@ -363,7 +364,17 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
 #syncChip.err .dot{background:var(--red,#d62839)}
 #syncChip.off .dot{background:#e0a800}
 @keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* v9.2.4 GitHub Pages safety */
+#githubSafeError{display:none;position:fixed;inset:16px;z-index:100000;background:#fff;border:2px solid #d62839;border-radius:18px;padding:20px;overflow:auto;box-shadow:0 20px 70px rgba(3,27,69,.25);font-family:Arial,sans-serif;color:#172033}
+#githubSafeError.show{display:block}
+#githubSafeError h2{color:#d62839;margin:0 0 10px}
 </style>
+<script>
+window.__TJ_BOOT_OK=false;
+window.addEventListener('error',function(e){try{console.error('Team Josh Hub error:',e.error||e.message);var p=document.getElementById('githubSafeError'),t=document.getElementById('githubSafeErrorText');if(p&&t&&!window.__TJ_BOOT_OK){t.textContent='Loading error: '+(e.message||'Unknown error')+'. Refresh the page or check the browser console.';p.classList.add('show');}}catch(_){}});
+window.addEventListener('unhandledrejection',function(e){try{console.error('Team Josh Hub promise error:',e.reason);var p=document.getElementById('githubSafeError'),t=document.getElementById('githubSafeErrorText');if(p&&t&&!window.__TJ_BOOT_OK){t.textContent='A required app process failed to load. Please refresh the page.';p.classList.add('show');}}catch(_){}});
+</script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
@@ -425,6 +436,8 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
 </style>
 </head>
 <body>
+<div id="githubSafeError" role="alert"><h2>Team Josh Hub could not finish loading</h2><p id="githubSafeErrorText">Please refresh the page. Your embedded logo and saved data are still preserved.</p><button onclick="location.reload()">Refresh App</button></div>
+
 <script id="hubDefaults">window.HUB_DEFAULTS={"syncUrl":"","branding":null};</script>
 <div id="loginOverlay">
   <div class="login-box">
@@ -2688,5 +2701,28 @@ document.addEventListener('DOMContentLoaded',initLapseUi_);
 
 </script>
 
+
+<script>
+(function(){
+  window.restoreEmbeddedTeamJoshLogo=function(){
+    try{
+      localStorage.removeItem('tjHubBranding');
+      if(typeof brandLogoTemp!=='undefined') brandLogoTemp=null;
+      var img=document.getElementById('brandLogo');
+      if(img&&typeof BRAND_ORIG!=='undefined'){img.src=BRAND_ORIG.logo;img.style.display='block';}
+      if(typeof applyBranding==='function') applyBranding({});
+      if(typeof populateBrandingForm==='function') populateBrandingForm();
+      if(typeof pushHubSoon==='function') pushHubSoon();
+      alert('Embedded Team Josh logo restored.');
+    }catch(e){console.error(e);alert('Could not restore the embedded logo: '+e.message);}
+  };
+  window.addEventListener('load',function(){
+    window.__TJ_BOOT_OK=true;
+    var p=document.getElementById('githubSafeError');if(p)p.classList.remove('show');
+    var img=document.getElementById('brandLogo');
+    if(img&&!img.getAttribute('src')&&typeof BRAND_ORIG!=='undefined') img.src=BRAND_ORIG.logo;
+  });
+})();
+</script>
 </body>
 </html>
