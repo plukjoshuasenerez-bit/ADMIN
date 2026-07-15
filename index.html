@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TEAM JOSH LICENSING HUB v7.1 — BLACK &amp; GOLD PORTAL</title>
+<title>TEAM JOSH LICENSING HUB v9.1 — MIRROR SYNC</title>
 <style>
 :root{--blue:#073b8e;--blue2:#0b5fc7;--navy:#031b45;--gold:#ffd23f;--gold2:#f5b301;--bg:#f4f8ff;--line:#d8e6fb;--text:#172033;--muted:#64748b;--red:#d62839;--green:#0fa968;--orange:#ff8c1a;--purple:#7b2cbf;--cyan:#00a7c7}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#eef5ff 0%,#fff 60%,#f8fbff 100%)}
@@ -346,8 +346,78 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
   #hubUserChip{top:8px;right:10px}
 }
 .br-theme.sel{border-color:var(--blue)!important;background:#eef5ff!important;box-shadow:0 0 0 2px rgba(11,95,199,.15)}
+
+/* Anticipated Lapse Report */
+.lapse-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:12px}.lapse-toolbar .field{min-width:180px;flex:1}
+.lapse-delay{display:inline-flex;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:1000;white-space:nowrap}.lapse-delay.green{background:#dcfce7;color:#067647}.lapse-delay.yellow{background:#fef9c3;color:#854d0e}.lapse-delay.orange{background:#ffedd5;color:#c2410c}.lapse-delay.red{background:#fee2e2;color:#b91c1c}
+.lapse-table{width:100%;min-width:0;table-layout:fixed}.lapse-table th,.lapse-table td{padding:7px 7px;font-size:11px;line-height:1.25;vertical-align:middle;overflow-wrap:anywhere}.lapse-table th{font-size:9.5px;line-height:1.15;white-space:normal}.lapse-table select{width:100%;min-width:0;border:1px solid var(--line);border-radius:7px;padding:5px 4px;background:#fff;font-size:10px}.lapse-table th:nth-child(1),.lapse-table td:nth-child(1){display:none}.lapse-table th:nth-child(2){width:8%}.lapse-table th:nth-child(3){width:14%}.lapse-table th:nth-child(4){width:18%}.lapse-table th:nth-child(5){width:8%}.lapse-table th:nth-child(6){width:9%}.lapse-table th:nth-child(7){width:9%}.lapse-table th:nth-child(8){width:12%}.lapse-table th:nth-child(9){width:10%}.lapse-table th:nth-child(10){width:8%}.lapse-table th:nth-child(11){width:4%}.lapse-table td:nth-child(2),.lapse-table td:nth-child(6){font-weight:900}.lapse-table td:nth-child(6){text-align:right;white-space:nowrap}.lapse-table td:nth-child(7),.lapse-table td:nth-child(9),.lapse-table td:nth-child(10),.lapse-table td:nth-child(11){text-align:center}.lapse-plan{white-space:normal;word-break:normal;font-weight:900;color:#073b8e;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.lapse-icon-btn{width:34px;height:34px;padding:0!important;display:inline-flex;align-items:center;justify-content:center;font-size:17px}.lapse-copy-icon{width:34px;height:34px;padding:0!important;display:inline-flex;align-items:center;justify-content:center;border-radius:999px!important;background:#0866ff!important;box-shadow:0 3px 10px rgba(8,102,255,.22)!important}.lapse-copy-icon svg{width:19px;height:19px;fill:#fff}.pr-indicator{display:flex;align-items:center;justify-content:center}.pr-on,.pr-off{display:inline-flex;align-items:center;justify-content:center;max-width:100%;white-space:nowrap;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:1000}.pr-on{color:#087a43;background:#dcfce7;border:1px solid #86efac}.pr-off{color:#64748b;background:#f1f5f9;border:1px solid #cbd5e1}.pr-indicator small{font-weight:800;color:#64748b}
+@media(max-width:1200px){.lapse-table th,.lapse-table td{padding:6px 5px;font-size:10px}.lapse-table th{font-size:8.5px}.lapse-delay{font-size:9.5px;padding:5px 7px}.pr-on,.pr-off{font-size:9px;padding:4px 6px}.lapse-copy-icon{width:30px;height:30px}.lapse-copy-icon svg{width:17px;height:17px}}
+.lapse-template{min-height:420px!important;font-family:Arial,Helvetica,sans-serif;line-height:1.45}.lapse-edit-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+@media(max-width:900px){.lapse-table{min-width:1080px}}
+
+/* v9.0 MIRROR SYNC indicator */
+#syncChip{position:fixed;bottom:10px;right:10px;z-index:300;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:1000;color:#34415b;box-shadow:0 8px 20px rgba(3,27,69,.15);cursor:pointer;max-width:88vw}
+#syncChip .dot{width:10px;height:10px;border-radius:50%;background:#9aa9be;flex:0 0 10px}
+#syncChip.ok .dot{background:var(--green,#0fa968)}
+#syncChip.busy .dot{background:var(--blue2,#0b5fc7);animation:syncPulse 1s infinite}
+#syncChip.err .dot{background:var(--red,#d62839)}
+#syncChip.off .dot{background:#e0a800}
+@keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.3}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<style id="lapseReadableNoOverlapPatch">
+/* v9.2.2 Anticipated Lapse readability safe patch */
+.lapse-table th:nth-child(2){width:8%}
+.lapse-table th:nth-child(3){width:13%}
+.lapse-table th:nth-child(4){width:17%}
+.lapse-table th:nth-child(5){width:8%}
+.lapse-table th:nth-child(6){width:9%}
+.lapse-table th:nth-child(7){width:9%}
+.lapse-table th:nth-child(8){width:14%}
+.lapse-table th:nth-child(9){width:10%}
+.lapse-table th:nth-child(10){width:8%}
+.lapse-table th:nth-child(11){width:4%}
+.lapse-table td:nth-child(5) select{
+  height:40px!important;
+  min-height:40px!important;
+  padding:3px 4px!important;
+  font-size:9px!important;
+  line-height:1.05!important;
+  font-weight:800!important;
+}
+.lapse-table td:nth-child(7),
+.lapse-table td:nth-child(9){
+  white-space:nowrap!important;
+  font-size:10px!important;
+}
+.lapse-table td:nth-child(8){
+  padding-left:8px!important;
+  padding-right:8px!important;
+}
+.lapse-delay{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:34px!important;
+  padding:5px 6px!important;
+  white-space:normal!important;
+  text-align:center!important;
+  font-size:9.5px!important;
+  line-height:1.05!important;
+  font-weight:1000!important;
+  border-radius:12px!important;
+}
+.pr-on,.pr-off{font-size:9px!important;padding:5px 6px!important}
+.lapse-table th,.lapse-table td{overflow:hidden!important}
+@media(max-width:1200px){
+  .lapse-table td:nth-child(5) select{height:38px!important;min-height:38px!important;font-size:8.5px!important}
+  .lapse-delay{font-size:8.5px!important;min-height:32px!important;padding:4px 5px!important}
+  .lapse-table td:nth-child(7),.lapse-table td:nth-child(9){font-size:9px!important}
+}
+</style>
 </head>
 <body>
 <script id="hubDefaults">window.HUB_DEFAULTS={"syncUrl":"","branding":null};</script>
@@ -367,6 +437,7 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
     <div class="lg-note">Default account: <b>admin / teamjosh</b> &mdash; change it in Sync Setup &gt; User Accounts after first login.</div>
   </div>
 </div>
+<div id="syncChip" class="ok" onclick="syncNow(true)" title="I-click para mag-Sync Now"><span class="dot"></span><span id="syncChipTxt">Sync ready</span></div>
 <div id="hubUserChip"><span id="hubUserName">USER</span><button onclick="hubLogout()">Logout</button></div>
 <div id="savedToast" class="saved-toast"><div class="big">✅ SAVED</div><div class="small">Applicant record saved successfully.</div></div>
 <div class="header">
@@ -384,6 +455,7 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
 
     <button class="tab" onclick="showTab('calendarTab',this)"><svg class="tab-icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M8 15h3M13 15h3M8 18h3"/></svg>Calendar</button>
     <button class="tab" onclick="showTab('clientDetailsTab',this)"><svg class="tab-icon" viewBox="0 0 24 24"><path d="M16 11a4 4 0 1 0-8 0"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M17 8h4M19 6v4"/></svg>Client Details</button>
+    <button class="tab" onclick="showTab('anticipatedLapseTab',this)"><svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 3 2.8 19h18.4L12 3Z"/><path d="M12 9v4M12 16h.01"/></svg>Anticipated Lapse</button>
     <button class="tab" onclick="showTab('syncTab',this)"><svg class="tab-icon" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-14-5l-2 2"/><path d="M4 4v5h5"/><path d="M4 12a8 8 0 0 0 14 5l2-2"/><path d="M20 20v-5h-5"/></svg>Sync Setup</button>
   </div></div>
 </div>
@@ -391,7 +463,7 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
   <div class="metrics" id="dashboard"></div>
 
   <section id="formTab" class="show">
-    <div class="card"><div class="section-title"><h2>Applicant Form</h2><div class="tools"><input id="csvUpload" type="file" accept=".csv" style="display:none" onchange="importCSV(this)"><button class="btn-yellow" onclick="$('csvUpload').click()">Upload CSV File</button></div></div>
+    <div class="card"><div class="section-title"><h2>Applicant Form</h2><div class="tools"><button class="btn-green" onclick="copyFormLinkForAgent()">&#128279; Link Form (i-send sa agent)</button><button class="btn-soft" onclick="openFormLink()">Open Form</button></div></div>
       <h3>Personal Information</h3><div class="grid">
         <div class="field"><label>Complete Name</label><input id="name"></div><div class="field"><label>Recruiter</label><input id="recruiter" list="recruiterList"></div><div class="field"><label>Unit Manager</label><input id="team" value="JOSHUA SENEREZ"></div><div class="field"><label>Birthdate</label><input id="birthdate" type="date"></div>
         <div class="field"><label>Birthplace</label><input id="birthplace"></div><div class="field"><label>Civil Status</label><select id="civil"><option></option><option>Single</option><option>Married</option><option>Separated</option><option>Widowed</option></select></div><div class="field span2"><label>Present Address</label><input id="address"></div>
@@ -472,9 +544,16 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
     <div class="field"><label>Search</label><input id="bybSearch" placeholder="Search name, source, location" oninput="renderBybRows()"></div>
     <div class="field"><label>Status Filter</label><select id="bybStatusFilter" onchange="renderBybRows()"><option value="">All Status</option><option>No Status</option><option>For BYB</option><option>For Table Top</option><option>Done BYB/Tabletop</option><option>No Show</option><option>Resched</option></select></div>
     <div class="field"><label>Source Filter</label><input id="bybSourceFilter" list="adminSocmedList" placeholder="Facebook / TikTok / Referral" oninput="renderBybRows()"></div>
-    <div class="tools"><button class="btn-green" onclick="openPipelineModal()">+ New</button><button class="btn-yellow" onclick="emailVisiblePipeline()">Send Email BCC</button><button class="btn-soft" onclick="renderBybRows()">Refresh</button></div>
+    <div class="tools"><button class="btn-green" onclick="openPipelineModal()">+ New</button><button class="btn-yellow" onclick="emailVisiblePipeline()">Send Email BCC</button><button class="btn-soft" onclick="renderBybRows()">Refresh</button><button class="btn-red" onclick="toggleBybDeleteMode()">&#128465; Delete</button></div>
   </div>
   <div class="pipeline-email-note">Email All opens your email app with all filtered pipeline emails in BCC.</div>
+  <div id="bybDelBar" style="display:none;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0;padding:10px;border:2px dashed var(--red);border-radius:12px;background:#fff5f6">
+    <b style="color:var(--red);font-size:12px">DELETE MODE:</b>
+    <label style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:900"><input type="checkbox" id="bybSelAll" onchange="bybSelectAllShown(this.checked)">Piliin lahat ng nakikita</label>
+    <button class="btn-red btn-small" id="bybDelSelBtn" onclick="deleteBybSelected()">Delete Selected (0)</button>
+    <button class="btn-red btn-small" onclick="deleteBybAll()">Delete ALL (shown)</button>
+    <button class="btn-soft btn-small" onclick="toggleBybDeleteMode()">Cancel</button>
+  </div>
   <div id="bybBoard" class="pipeline-board"></div>
   <h3>Pipeline List</h3>
   <div class="table-wrap" style="margin-top:12px"><table class="admin-pipeline-table pipeline-list-table"><thead><tr><th>Messenger</th><th>FB Link</th><th>For Coding Link</th><th>Name</th><th>Source</th><th>Age</th><th>Location</th><th>Course</th><th>Current Work</th><th>Mobile Number</th><th>Email</th><th>Status</th><th>Schedule/Done Date</th><th>Time</th><th>Remarks</th><th>Best Time</th><th>Best Day</th><th>Created</th><th>Last Action</th><th>Action</th></tr></thead><tbody id="bybRows"></tbody></table></div>
@@ -534,6 +613,30 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
     </div>
   </div>
 </section>
+
+<section id="anticipatedLapseTab">
+  <div class="card">
+    <div class="section-title"><h2>Anticipated Lapse Report</h2><span class="note">Upload the PRISM Anticipated Lapse PDF, then filter per agent and copy a personalized reminder.</span></div>
+    <div class="lapse-toolbar">
+      <div class="field"><label>Upload Anticipated Lapse PDF</label><input id="lapsePdfFile" type="file" accept="application/pdf" onchange="uploadAnticipatedLapsePdf(event)"></div>
+      <div class="field"><label>Agent Filter</label><select id="lapseAgentFilter" onchange="renderLapseReport()"><option value="">All Agents</option></select></div>
+      <div class="field"><label>Search Client / Policy</label><input id="lapseSearch" placeholder="Search name or policy number" oninput="renderLapseReport()"></div>
+      <div class="tools"><button class="btn-yellow lapse-icon-btn" onclick="lapseScreenshot()" title="Capture Screenshot" aria-label="Capture Screenshot">&#128248;</button><button class="btn-red" onclick="clearLapseReport()">Clear Report</button></div>
+    </div>
+    <div id="lapseStatus" class="note" style="margin-bottom:10px">No PDF uploaded yet.</div>
+    <div id="lapseShotArea" style="background:#fff;padding:6px;border-radius:12px">
+    <div id="lapseShotTitle" style="font-size:12px;font-weight:1000;color:#10233f;margin:2px 0 8px"></div>
+    <div id="lapseSummary" class="metrics"></div>
+    <div class="table-wrap"><table class="lapse-table"><thead><tr><th>Agent</th><th>Policy #</th><th>Policy Owner</th><th>Plan Name</th><th>Gender</th><th>Premium</th><th>Paid To Date</th><th>Delay</th><th>Effectivity</th><th>Total Month Paid</th><th>Action</th></tr></thead><tbody id="lapseRows"><tr><td colspan="11" style="text-align:center;padding:20px;font-weight:900;color:#64748b">Upload an Anticipated Lapse PDF to begin.</td></tr></tbody></table></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title"><h2>Reminder Message Template</h2><span class="note">You may edit and save this template. Placeholders are replaced automatically.</span></div>
+    <textarea id="lapseReminderTemplate" class="lapse-template"></textarea>
+    <div class="lapse-edit-actions"><button class="btn-green" onclick="saveLapseTemplate()">Save Edited Message</button><button class="btn-soft" onclick="resetLapseTemplate()">Reset Default Message</button></div>
+  </div>
+</section>
+
 
 <div id="clientModal" class="client-modal-backdrop">
   <div class="client-modal">
@@ -616,7 +719,7 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
   </div>
 </section>
 
-<section id="syncTab"><div class="card"><div class="section-title"><h2>SYNC</h2></div><div class="grid"><div class="field span4"><label>Google Apps Script Web App URL (one link syncs everything)</label><input id="syncUrl" placeholder="Paste deployment URL here"></div><div class="field span4"><label>Public Application Form Link (share to applicants — they register a username &amp; password first)</label><input id="formLinkBox" readonly placeholder="Save your Web App URL first — the shareable form link will appear here" onclick="this.select()"></div></div><div class="tools" style="margin-top:12px"><button onclick="saveSyncUrl()">Save URL</button><button class="btn-soft" onclick="testSyncConnection()">Test Connection</button><button class="btn-soft" onclick="copyScript()">Copy Appscript</button><button class="btn-green" onclick="copyFormLink()">Copy Formlink</button><button class="btn-soft" onclick="openFormLink()">Open Form</button><button class="btn-green" onclick="pushToSheet()">Manual Push Data</button><button class="btn-yellow" onclick="pullFromSheet()">Manual Load Data</button><button class="btn-soft" onclick="downloadShareCopy()">Download Auto-Connect Copy</button></div><p class="note"><b>One link, everything synced:</b> Masterlist / Application Form (Licensing_Master), Client Details, Links, Spiel, Calendar &amp; To-dos, Rookie Challenge, and Admin Activity all sync through this single Web App URL. Setup: click <b>Copy Appscript</b> &rarr; in your Google Sheet open Extensions &gt; Apps Script &rarr; paste &amp; save &rarr; Deploy as Web App (Execute as Me, access: Anyone) &rarr; paste the URL above &rarr; Save URL &rarr; Test Connection. If you deployed an old version, re-deploy via Manage Deployments &gt; Edit &gt; New Version (same URL keeps working). The Form Link opens the application form directly &mdash; <b>walang login</b>, fill out lang at Submit. Kung parehong Name at Contact Number ang i-submit ulit, mag-a-update lang ang record (hindi magdodoble). <b>PARA HINDI MAWALA ANG LINK SA IBANG DEVICE:</b> i-click ang <b>Download Auto-Connect Copy</b> &mdash; kopya ito ng hub na <b>naka-embed na ang Web App URL at branding sa loob mismo ng file</b>. Iyon ang i-send/i-save sa ibang devices: pagbukas, konektado agad at auto-load ang data, hindi na kailangan mag-paste ng URL kahit kailan. Bonus: kung form link lang ang hawak mo (may ?page=form), pwede mo iyon i-paste sa URL box &mdash; automatic aalisin ang ?page=form at magiging Web App URL.</p></div>
+<section id="syncTab"><div class="card"><div class="section-title"><h2>SYNC</h2></div><div class="grid"><div class="field span4"><label>Google Apps Script Web App URL (one link syncs everything)</label><input id="syncUrl" placeholder="Paste deployment URL here"></div><div class="field span4"><label>Public Application Form Link (share to applicants — they register a username &amp; password first)</label><input id="formLinkBox" readonly placeholder="Save your Web App URL first — the shareable form link will appear here" onclick="this.select()"></div></div><div class="tools" style="margin-top:12px"><button onclick="saveSyncUrl()">Save URL</button><button class="btn-green" onclick="syncNow(true)">&#128260; Sync Now</button><button class="btn-soft" onclick="testSyncConnection()">Test Connection</button><button class="btn-soft" onclick="copyScript()">Copy Appscript</button><button class="btn-green" onclick="copyFormLink()">Copy Formlink</button><button class="btn-soft" onclick="openFormLink()">Open Form</button><button class="btn-green" onclick="pushToSheet()">Manual Push Data</button><button class="btn-yellow" onclick="pullFromSheet()">Manual Load Data</button><span id="lastSyncLbl" class="note" style="align-self:center"></span><button class="btn-soft" onclick="downloadShareCopy()">Download Auto-Connect Copy</button></div><p class="note"><b>One link, everything synced:</b> Masterlist / Application Form (Licensing_Master), Client Details, Links, Spiel, Calendar &amp; To-dos, Rookie Challenge, and Admin Activity all sync through this single Web App URL. Setup: click <b>Copy Appscript</b> &rarr; in your Google Sheet open Extensions &gt; Apps Script &rarr; paste &amp; save &rarr; Deploy as Web App (Execute as Me, access: Anyone) &rarr; paste the URL above &rarr; Save URL &rarr; Test Connection. If you deployed an old version, re-deploy via Manage Deployments &gt; Edit &gt; New Version (same URL keeps working). The Form Link opens the application form directly &mdash; <b>walang login</b>, fill out lang at Submit. Kung parehong Name at Contact Number ang i-submit ulit, mag-a-update lang ang record (hindi magdodoble). <b>PARA HINDI MAWALA ANG LINK SA IBANG DEVICE:</b> i-click ang <b>Download Auto-Connect Copy</b> &mdash; kopya ito ng hub na <b>naka-embed na ang Web App URL at branding sa loob mismo ng file</b>. Iyon ang i-send/i-save sa ibang devices: pagbukas, konektado agad at auto-load ang data, hindi na kailangan mag-paste ng URL kahit kailan. Bonus: kung form link lang ang hawak mo (may ?page=form), pwede mo iyon i-paste sa URL box &mdash; automatic aalisin ang ?page=form at magiging Web App URL.</p></div>
   <div class="card"><div class="section-title"><h2>Branding &amp; Theme</h2><span class="note">Pumili ng preset sa Color Presets (live preview agad), gumamit ng sariling Primary/Accent colors, o i-click ang <b>Auto Colors from Logo</b> para kunin ang colorway mula sa logo mo (automatic din ito pag nag-upload ka ng bagong logo). Tapos i-click ang <b>Apply &amp; Save Branding</b>. Kasama ang branding sa Share Copy at sa public Application Portal. <b>Reset to Default</b> para bumalik sa dating itsura.</span></div>
     <div class="grid">
       <div class="field"><label>Team Name</label><input id="brTeamName" placeholder="Team Josh"></div>
@@ -669,14 +772,15 @@ function computeProgress(o){let c=[];['name','recruiter','birthdate','mobile','e
 function calcProgress(){let o=getForm();$('overallFill').style.width=o.progress+'%';$('overallTxt').textContent=o.progress+'%';}
 
 let autoSaveTimer=null;
-function autoSaveCurrent(){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>{let o=getForm();if(!o.name)return;let prev=editingId?applicants.find(a=>a.id===editingId):null;if(!editingId){o.id=uid();keepCreated_(o,null);applicants.unshift(o);editingId=o.id;}else{o.id=editingId;keepCreated_(o,prev);applicants=applicants.map(a=>a.id===editingId?o:a);}saveAll();},350);}
+function autoSaveCurrent(){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>{let o=getForm();if(!o.name)return;let prev=editingId?applicants.find(a=>a.id===editingId):null;if(!editingId){o.id=uid();keepCreated_(o,null);applicants.unshift(o);editingId=o.id;}else{o.id=editingId;keepCreated_(o,prev);applicants=applicants.map(a=>a.id===editingId?o:a);}stampRec_(o);saveAll();},350);}
 function showSavedMessage(){const t=$('savedToast');if(!t){alert('Saved');return;}t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);} 
-function saveApplicant(){let o=getForm();if(!o.name){alert('Complete Name is required');return}let prev=editingId?applicants.find(a=>a.id===editingId):null;if(!editingId){o.id=uid();keepCreated_(o,null);applicants.unshift(o)}else{o.id=editingId;keepCreated_(o,prev);applicants=applicants.map(a=>a.id===editingId?o:a)}editingId=o.id;saveAll();clearForm();renderAll();closeApplicantModal();showSavedMessage();pushToSheet(true);} 
-function saveAll(){localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingSyncUrl',$('syncUrl')?.value||'');renderAll();}
+function saveApplicant(){let o=getForm();if(!o.name){alert('Complete Name is required');return}let prev=editingId?applicants.find(a=>a.id===editingId):null;if(!editingId){o.id=uid();keepCreated_(o,null);applicants.unshift(o)}else{o.id=editingId;keepCreated_(o,prev);applicants=applicants.map(a=>a.id===editingId?o:a)}stampRec_(o);editingId=o.id;saveAll();clearForm();renderAll();closeApplicantModal();showSavedMessage();pushToSheet(true);} 
+function stampRec_(o){o.updatedAt=new Date().toISOString();o.deviceId=(window.HUB_DEVICE_ID||'');return o;}
+function saveAll(){localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingSyncUrl',$('syncUrl')?.value||'');renderAll();if(typeof pushHubSoon==='function')pushHubSoon();}
 function loadAll(){try{applicants=JSON.parse(localStorage.getItem('tjLicensingApplicants')||'[]')}catch(e){applicants=[]}renderAll();}
 function clearForm(){editingId=null;setForm({team:'JOSHUA SENEREZ',retake:'0'});}
 function editApplicant(id){let a=applicants.find(x=>x.id===id);if(a){setForm(a);showTab('formTab',document.querySelectorAll('.tab')[0]);openApplicantModal();window.scrollTo({top:0,behavior:'smooth'})}}
-function delApplicant(id){if(confirm('Delete this applicant?')){applicants=applicants.filter(a=>a.id!==id);saveAll();clearForm();}}
+function delApplicant(id){if(confirm('Delete this applicant?')){applicants=applicants.filter(a=>a.id!==id);markDeleted(id);saveAll();clearForm();}}
 function showTab(id,btn){window.currentTabId=id;document.querySelectorAll('section').forEach(s=>s.classList.remove('show'));$(id).classList.add('show');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderAll();if(id==='adminTab'||id==='bybPipelineTab')renderAdminActivity();if(id==='rookieTab')renderRookieChallenge();}
 function stageOf(a){if(a.stage)return a.stage;if(a.codingDate)return'Coded';if(a.licensingStatus==='Approved')return'Training';if((a.examResult||'').includes('Pass'))return'Licensing';if(a.examDate)return'Exam Scheduled';if(a.examFee==='Paid')return'Exam Registration';if(a.debriefStatus==='Done')return'Exam Registration';if(a.debriefDate)return'Debriefing';return'New Applicant'}
 function daysSince(a){let d=a.lastUpdated||a.dateSaved;return d?Math.max(0,Math.floor((new Date()-new Date(d))/86400000)):0} function delayPill(a){let d=daysSince(a),s=stageOf(a);if(s==='Coded')return'<span class="pill green">Done</span>';if(d>=30)return'<span class="pill red">Delayed</span>';if(d>=14)return'<span class="pill orange">Watch</span>';return'<span class="pill blue">On Track</span>'}
@@ -809,7 +913,7 @@ function editClientMessenger(id){
   updateClientField(id,'fbLink',next.trim());
 }
 function deleteClientDetail(id){
-  if(confirm('Delete this client?')){clientDetails=clientDetails.filter(c=>c.id!==id);saveClientDetails();}
+  if(confirm('Delete this client?')){clientDetails=clientDetails.filter(c=>c.id!==id);markDeleted(id);saveClientDetails();}
 }
 function monthOfDate_(v){if(!v)return ''; const d=new Date(v+'T00:00:00'); return isNaN(d)?'':String(d.getMonth()+1);}
 function yearOfDate_(v){if(!v)return ''; const d=new Date(v+'T00:00:00'); return isNaN(d)?'':String(d.getFullYear());}
@@ -1231,14 +1335,27 @@ let all=pst.pct>=100||stageOf(a)==='Coded';$('checkCongrats').innerHTML=all?'<di
 
 function nextAction(a){if(!a.debriefDate)return'Set debriefing schedule';if(a.debriefStatus!=='Done')return'Complete debriefing';if(!a.examDate)return'Schedule exam';if(!(a.examResult||'').includes('Pass'))return'Update exam result / reschedule';if(a.licensingStatus!=='Approved')return'Process licensing approval';if(trainingPct(a)<100)return'Complete training checklist';return'Move to coded';}
 function renderRecruiters(){let names=[...new Set(applicants.map(a=>a.recruiter).filter(Boolean))];$('recruiterList').innerHTML=names.map(n=>`<option value="${n}">`).join('');}
+/* v9.0 MIRROR SYNC: conflict resolution — ang record na may pinakabagong updatedAt/lastUpdated ang mananalo */
 function mergeByIdentity_(localRows,sheetRows){
   const keyOf=r=>String((r&&r.id)||'').trim() || ['name','mobile','email'].map(k=>String((r&&r[k])||'').trim().toLowerCase()).filter(Boolean).join('|');
+  const ts=r=>{const v=r&&(r.updatedAt||r.lastUpdated||r.dateSaved||r.createdAt||r.created);const t=Date.parse(v||'');return isNaN(t)?0:t;};
   const mergeObj=(base,inc)=>{let out={...(base||{})};Object.keys(inc||{}).forEach(k=>{let v=inc[k];if(k==='docs'||k==='trains'){out[k]={...(out[k]||{}),...(v||{})};return;}if(v!==''&&v!=null)out[k]=v;});return out;};
   const map=new Map();
-  (sheetRows||[]).forEach(r=>{let k=keyOf(r);if(k)map.set(k,mergeObj(map.get(k),r));});
-  (localRows||[]).forEach(r=>{let k=keyOf(r);if(k)map.set(k,mergeObj(map.get(k),r));});
+  const put=r=>{
+    const k=keyOf(r);if(!k)return;
+    const ex=map.get(k);
+    if(!ex){map.set(k,{...r});return;}
+    if(ts(r)>=ts(ex))map.set(k,mergeObj(ex,r));
+    else map.set(k,mergeObj(r,ex));
+  };
+  (sheetRows||[]).forEach(put);
+  (localRows||[]).forEach(put);
   return Array.from(map.values());
 }
+/* v9.0 tombstones: naka-record ang mga na-delete para hindi na bumalik mula sa sheet */
+let deletedIds={};try{deletedIds=JSON.parse(localStorage.getItem('tjDeletedIds')||'{}')||{}}catch(e){deletedIds={}}
+function markDeleted(id){if(!id)return;deletedIds[id]=new Date().toISOString();localStorage.setItem('tjDeletedIds',JSON.stringify(deletedIds));if(typeof pushHubSoon==='function')pushHubSoon();}
+function applyTombstones_(arr){return (arr||[]).filter(x=>!(x&&x.id&&deletedIds[x.id]));}
 function saveSyncUrl(){
   let u=($('syncUrl').value||'').trim();
   u=u.replace(/[?&]page=form\b/,'').replace(/\?$/,'');
@@ -1275,8 +1392,8 @@ function syncErrHelp_(msg){
   return msg;
 }
 async function testSyncConnection(){try{let data=await jsonpSync_({action:'test'});if(data.ok){if(data.version){alert('CONNECTED! Apps Script version '+data.version+' - complete sync is active (Masterlist, Client Details, Links, Spiel, Calendar, Rookie, Branding).');}else{alert('Connected, PERO LUMANG Apps Script pa ang naka-deploy kaya hindi pumapasok sa sheet ang Calendar, Client Details, atbp.\n\nAyusin: (1) click Copy Appscript, (2) sa Google Sheet: Extensions > Apps Script, burahin laman at i-paste ang bago, Save, (3) Deploy > Manage deployments > Edit (lapis) > Version: New version > Deploy.\n\nHindi magbabago ang URL mo.');}}else alert('Script error: '+syncErrHelp_(data.error||data.message||JSON.stringify(data)));}catch(e){alert('Connection failed: '+e.message);}}
-async function pushToSheet(silent){let url=$('syncUrl')?.value||'';if(!url){if(!silent)alert('Paste Web App URL first.');return}try{await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'mergeAll',data:applicants,adminData:adminData,calendarTasks:(typeof calTasks!=='undefined'?calTasks:[]),hubData:{clientDetails:clientDetails||[],linkVault:linkVault||[],spielVault:spielVault||[],rookieTasks:rookieTasks||[],rookieTargets:rookieTargets||{},rookieActivity:rookieActivity||{},branding:JSON.parse(localStorage.getItem('tjHubBranding')||'null')||undefined}})});if(!silent)alert('Safe push sent. Wait 3 seconds, then click Load from Google Sheet to verify.')}catch(e){if(!silent)alert('Push failed: '+e.message)}}
-async function pullFromSheet(silent){try{let data=await jsonpSync_({action:'loadAll'});if(!data.ok){if(!silent)alert('Load error: '+syncErrHelp_(data.error||data.message||JSON.stringify(data)));return}applicants=mergeByIdentity_(applicants,data.data||[]);if(data.adminData){adminData.socmed=[...new Set([...(adminData.socmed||[]),...(data.adminData.socmed||[])])];adminData.activities=mergeByIdentity_(adminData.activities||[],data.adminData.activities||[]);adminData.byb=mergeByIdentity_(adminData.byb||[],data.adminData.byb||[]);}if(data.calendarTasks&&typeof calMergeFromSheet==='function')calMergeFromSheet(data.calendarTasks);if(data.hubData&&typeof mergeHubDataFromSheet==='function')mergeHubDataFromSheet(data.hubData);localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingAdminActivity',JSON.stringify(adminData));renderAll();renderAdminActivity();if(!silent)alert('Loaded and merged from sheet. Local data was not erased.')}catch(e){if(!silent)alert('Load failed: '+e.message)}}
+async function pushToSheet(silent){let url=$('syncUrl')?.value||'';if(!url){if(!silent)alert('Paste Web App URL first.');return}try{await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'mergeAll',data:applicants,adminData:adminData,calendarTasks:(typeof calTasks!=='undefined'?calTasks:[]),hubData:{clientDetails:clientDetails||[],linkVault:linkVault||[],spielVault:spielVault||[],rookieTasks:rookieTasks||[],rookieTargets:rookieTargets||{},rookieActivity:rookieActivity||{},branding:JSON.parse(localStorage.getItem('tjHubBranding')||'null'),lapseRows:(typeof anticipatedLapseRows!=='undefined'?anticipatedLapseRows:[]),lapseTemplate:localStorage.getItem('tjLapseReminderTemplate')||undefined,hubUsers:JSON.parse(localStorage.getItem('tjHubUsers')||'[]'),deletedIds:deletedIds||{}}})});if(!silent)alert('Safe push sent. Wait 3 seconds, then click Load from Google Sheet to verify.')}catch(e){if(!silent)alert('Push failed: '+e.message)}}
+async function pullFromSheet(silent){try{let data=await jsonpSync_({action:'loadAll'});if(!data.ok){if(!silent)alert('Load error: '+syncErrHelp_(data.error||data.message||JSON.stringify(data)));return}applicants=applyTombstones_(mergeByIdentity_(applicants,data.data||[]));if(data.adminData){adminData.socmed=[...new Set([...(adminData.socmed||[]),...(data.adminData.socmed||[])])];adminData.activities=mergeByIdentity_(adminData.activities||[],data.adminData.activities||[]);adminData.byb=applyTombstones_(mergeByIdentity_(adminData.byb||[],data.adminData.byb||[]));}if(data.calendarTasks&&typeof calMergeFromSheet==='function')calMergeFromSheet(data.calendarTasks);if(data.hubData&&typeof mergeHubDataFromSheet==='function')mergeHubDataFromSheet(data.hubData);localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingAdminActivity',JSON.stringify(adminData));renderAll();renderAdminActivity();if(!silent)alert('Loaded and merged from sheet. Local data was not erased.')}catch(e){if(!silent)alert('Load failed: '+e.message)}}
 
 function parseCSV(text){
   const rows=[]; let row=[]; let cur=''; let q=false;
@@ -1326,7 +1443,29 @@ function closePipelineModal(){if($('pipelineModal'))$('pipelineModal').classList
 function clearPipelineForm(){['bybFb','bybCodingLink','bybName','bybSource','bybAge','bybLocation','bybCourse','bybWork','bybMobile','bybEmail','bybDoneDate','bybScheduleTime','bybRemarks','bybBestTime','bybBestDay'].forEach(id=>{if($(id))$(id).value=''});if($('bybStatus'))$('bybStatus').value='No Status';}
 function normalizePipelineStatus(st){st=String(st||'No Status').trim();if(['Done BYB','Done Tabletop','Pending/Done BYB/Tabletop','Pending / Done BYB/Tabletop','Done BYB/Tabletop'].includes(st))return 'Done BYB/Tabletop';if(st==='For Tabletop')return 'For Table Top';if(st==='No show')return 'No Show';return st||'No Status';}
 function addBybInvite(){let item={id:'BYB-'+Date.now(),fb:$('bybFb')?.value||'',codingLink:$('bybCodingLink')?.value||'',name:$('bybName')?.value||'',source:$('bybSource')?.value||'',age:$('bybAge')?.value||'',location:$('bybLocation')?.value||'',course:$('bybCourse')?.value||'',work:$('bybWork')?.value||'',mobile:$('bybMobile')?.value||'',email:$('bybEmail')?.value||'',status:normalizePipelineStatus($('bybStatus')?.value||'No Status'),doneDate:$('bybDoneDate')?.value||'',scheduleTime:$('bybScheduleTime')?.value||'',remarks:$('bybRemarks')?.value||'',bestTime:$('bybBestTime')?.value||'',bestDay:$('bybBestDay')?.value||'',createdAt:stampNow().iso,createdDate:stampNow().date,createdTime:stampNow().time,lastUpdated:stampNow().iso,lastUpdatedDate:stampNow().date,lastUpdatedTime:stampNow().time};if(!item.name){alert('Name is required');return;}if(item.source&&!adminData.socmed.includes(item.source))adminData.socmed.push(item.source);adminData.byb.unshift(item);clearPipelineForm();closePipelineModal();saveAdminActivity();}
-function deleteBybInvite(id){adminData.byb=adminData.byb.filter(x=>x.id!==id);saveAdminActivity();}
+function deleteBybInvite(id){adminData.byb=adminData.byb.filter(x=>x.id!==id);markDeleted(id);saveAdminActivity();}
+/* v9.1 Pipeline delete mode: checkbox select o delete all */
+let bybDeleteMode=false;const bybSelected=new Set();
+function toggleBybDeleteMode(){bybDeleteMode=!bybDeleteMode;bybSelected.clear();const bar=$('bybDelBar');if(bar)bar.style.display=bybDeleteMode?'flex':'none';const sa=$('bybSelAll');if(sa)sa.checked=false;renderBybRows();updateBybDelCount_();}
+function updateBybDelCount_(){const b=$('bybDelSelBtn');if(b)b.textContent='Delete Selected ('+bybSelected.size+')';}
+function bybToggleSel(id,cb){if(cb.checked)bybSelected.add(id);else bybSelected.delete(id);updateBybDelCount_();}
+function bybSelectAllShown(chk){getFilteredByb().forEach(r=>{if(chk)bybSelected.add(r.id);else bybSelected.delete(r.id);});renderBybRows();updateBybDelCount_();}
+function deleteBybSelected(){
+  if(!bybSelected.size){alert('Wala kang napiling records. I-check muna ang mga buburahin.');return;}
+  if(!confirm('Sigurado ka? Made-delete nang PERMANENTE ang '+bybSelected.size+' pipeline record(s) sa lahat ng devices.'))return;
+  adminData.byb=(adminData.byb||[]).filter(r=>{if(bybSelected.has(r.id)){markDeleted(r.id);return false;}return true;});
+  bybSelected.clear();saveAdminActivity();toggleBybDeleteMode();
+}
+function deleteBybAll(){
+  const shown=getFilteredByb();
+  if(!shown.length){alert('Walang records na nakikita.');return;}
+  if(!confirm('Sigurado ka? Made-delete nang PERMANENTE ang LAHAT ng '+shown.length+' pipeline records na nakikita (base sa filter).'))return;
+  const typed=prompt('Para kumpirmahin, i-type ang salitang: DELETE');
+  if(String(typed||'').trim().toUpperCase()!=='DELETE'){alert('Kinansela.');return;}
+  const ids=new Set(shown.map(r=>r.id));
+  adminData.byb=(adminData.byb||[]).filter(r=>{if(ids.has(r.id)){markDeleted(r.id);return false;}return true;});
+  bybSelected.clear();saveAdminActivity();toggleBybDeleteMode();
+}
 function nextBybDefaultDate(){let d=new Date();let day=d.getDay();if(day===0)d.setDate(d.getDate()+1);return d.toISOString().slice(0,10);}
 function setBybStatus(id,status){let r=adminData.byb.find(x=>x.id===id);if(!r)return;status=normalizePipelineStatus(status);if(status==='For BYB'){
   const date=prompt('BYB date? (Monday-Saturday)', r.doneDate || nextBybDefaultDate()); if(!date)return; r.doneDate=date; r.scheduleTime='19:00'; r.remarks=(r.remarks||'').replace(/\s*\|?\s*BYB[^|]*$/,''); r.remarks=(r.remarks? r.remarks+' | ':'')+'BYB 7PM';
@@ -1453,7 +1592,7 @@ function bybListHtml(r){
   let st=normalizePipelineStatus(r.status);
   let chat=dualMessengerIcons(r.fb,r.codingLink||r.forCodingLink||'');
   return `<div class="pipeline-list-row ${pipelineStatusCss(st)}">
-    <div>${chat}</div>
+    <div>${(typeof bybDeleteMode!=='undefined'&&bybDeleteMode)?`<input type="checkbox" style="width:17px;height:17px;accent-color:var(--red);margin-right:4px;vertical-align:middle" ${bybSelected.has(r.id)?'checked':''} onchange="bybToggleSel('${r.id}',this)">`:''}${chat}</div>
     <div>${bybField_(r,'fb','url')}</div>
     <div>${bybField_(r,'codingLink','url')}</div>
     <div>${bybField_(r,'name')}</div>
@@ -1483,13 +1622,13 @@ function addLinkVault(){let rec={id:uid(),group:val('linkGroup'),name:val('linkN
 function normalizeUrl_(u){u=String(u||'').trim();if(!u)return '#';if(!/^https?:\/\//i.test(u))u='https://'+u;return u;}
 function renderLinkVault(){const tb=$('linkRows');if(!tb)return;const q=String(val('linkSearch')||'').toLowerCase().trim();const rows=(linkVault||[]).filter(r=>!q||[r.group,r.name,r.url].join(' ').toLowerCase().includes(q));tb.innerHTML=rows.map(r=>`<tr><td>${esc(r.group||'')}</td><td>${esc(r.name||'')}</td><td><a class="req-link" href="${esc(normalizeUrl_(r.url))}" target="_blank">${esc(r.url||'')}</a></td><td><button class="btn-small" onclick="window.open('${esc(normalizeUrl_(r.url))}','_blank')">Open</button> <button class="btn-small btn-red" onclick="delLinkVault('${r.id}')">Del</button></td></tr>`).join('')||'<tr><td colspan="4">No saved links found.</td></tr>';}
 function editLinkVault(id,k,v){linkVault=linkVault.map(r=>r.id===id?Object.assign({},r,{[k]:v}):r);saveVaults();}
-function delLinkVault(id){if(confirm('Delete this link?')){linkVault=linkVault.filter(r=>r.id!==id);saveVaults();renderLinkVault();}}
+function delLinkVault(id){if(confirm('Delete this link?')){linkVault=linkVault.filter(r=>r.id!==id);markDeleted(id);saveVaults();renderLinkVault();}}
 function addSpielVault(){let rec={id:uid(),group:val('spielGroup'),name:val('spielName'),text:val('spielText'),createdAt:new Date().toISOString()};if(!rec.name&&!rec.text){alert('Add spiel name and message.');return}spielVault.unshift(rec);saveVaults();set('spielGroup','');set('spielName','');set('spielText','');renderSpielVault();}
 function renderSpielVault(){const tb=$('spielRows');if(!tb)return;const q=String(val('spielSearch')||'').toLowerCase().trim();const rows=(spielVault||[]).filter(r=>!q||[r.group,r.name,r.text].join(' ').toLowerCase().includes(q));tb.innerHTML=rows.map(r=>`<tr><td><input value="${esc(r.group||'')}" oninput="editSpielVault('${r.id}','group',this.value)"></td><td><input value="${esc(r.name||'')}" oninput="editSpielVault('${r.id}','name',this.value)"></td><td><textarea oninput="editSpielVault('${r.id}','text',this.value)">${esc(r.text||'')}</textarea></td><td><button class="btn-small" onclick="copySpielVault('${r.id}',this)">Copy</button> <button class="btn-small btn-red" onclick="delSpielVault('${r.id}')">Del</button></td></tr>`).join('')||'<tr><td colspan="4">No saved spiel found.</td></tr>';}
 function editSpielVault(id,k,v){spielVault=spielVault.map(r=>r.id===id?Object.assign({},r,{[k]:v}):r);saveVaults();}
 function copySpielVault(id,btn){let r=spielVault.find(x=>x.id===id);let txt=(r&&r.text)||'';navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(()=>{btn.insertAdjacentHTML('afterend','<span class="copy-ok">Copied</span>');setTimeout(()=>{document.querySelectorAll('.copy-ok').forEach(x=>x.remove())},1200)}):prompt('Copy spiel:',txt);}
 function focusSpielEdit(id){showTab('spielTab',document.querySelector("button[onclick*=\"spielTab\"]"));setTimeout(()=>{let rows=document.querySelectorAll('#spielRows tr');for(let tr of rows){if(tr.innerHTML.includes(id)){let ta=tr.querySelector('textarea');if(ta){ta.focus();ta.select();}}}},100);}
-function delSpielVault(id){if(confirm('Delete this spiel?')){spielVault=spielVault.filter(r=>r.id!==id);saveVaults();renderSpielVault();}}
+function delSpielVault(id){if(confirm('Delete this spiel?')){spielVault=spielVault.filter(r=>r.id!==id);markDeleted(id);saveVaults();renderSpielVault();}}
 
 const APPS_SCRIPT=`const SPREADSHEET_ID = ''; // OPTIONAL. Paste your Google Sheet ID here if needed.
 const MASTER_SHEET = 'Licensing_Master';
@@ -1774,7 +1913,59 @@ function renderApplicationForm_(){
   + '#thanksView h2{color:var(--teal);letter-spacing:1px;margin:0 0 8px}'
   + '#formView{display:block}'
   + '@media(max-width:560px){.grid{grid-template-columns:1fr}.head img{width:180px}}'
-  + '</style></head><body><div class="wrap">'
+  + '</style>
+<style id="lapseReadableNoOverlapPatch">
+/* v9.2.2 Anticipated Lapse readability safe patch */
+.lapse-table th:nth-child(2){width:8%}
+.lapse-table th:nth-child(3){width:13%}
+.lapse-table th:nth-child(4){width:17%}
+.lapse-table th:nth-child(5){width:8%}
+.lapse-table th:nth-child(6){width:9%}
+.lapse-table th:nth-child(7){width:9%}
+.lapse-table th:nth-child(8){width:14%}
+.lapse-table th:nth-child(9){width:10%}
+.lapse-table th:nth-child(10){width:8%}
+.lapse-table th:nth-child(11){width:4%}
+.lapse-table td:nth-child(5) select{
+  height:40px!important;
+  min-height:40px!important;
+  padding:3px 4px!important;
+  font-size:9px!important;
+  line-height:1.05!important;
+  font-weight:800!important;
+}
+.lapse-table td:nth-child(7),
+.lapse-table td:nth-child(9){
+  white-space:nowrap!important;
+  font-size:10px!important;
+}
+.lapse-table td:nth-child(8){
+  padding-left:8px!important;
+  padding-right:8px!important;
+}
+.lapse-delay{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:34px!important;
+  padding:5px 6px!important;
+  white-space:normal!important;
+  text-align:center!important;
+  font-size:9.5px!important;
+  line-height:1.05!important;
+  font-weight:1000!important;
+  border-radius:12px!important;
+}
+.pr-on,.pr-off{font-size:9px!important;padding:5px 6px!important}
+.lapse-table th,.lapse-table td{overflow:hidden!important}
+@media(max-width:1200px){
+  .lapse-table td:nth-child(5) select{height:38px!important;min-height:38px!important;font-size:8.5px!important}
+  .lapse-delay{font-size:8.5px!important;min-height:32px!important;padding:4px 5px!important}
+  .lapse-table td:nth-child(7),.lapse-table td:nth-child(9){font-size:9px!important}
+}
+</style>
+</head><body><div class="wrap">'
   + '<div class="head"><img src="' + headLogo + '" alt="' + tName + '">' + nameLine + '<div class="gline"></div></div>'
   + '<div class="card">'
   + '<div id="formView">'
@@ -1866,21 +2057,130 @@ const CAL_TYPE_COLORS={'Exam':'#d62839','Debriefing':'#ff8c1a','Coding':'#0fa968
 let calTasks=[],calSelColor=CAL_COLORS[0],calCursor=new Date(),calSelectedYmd=null,calEditId=null;
 
 function loadCalTasks(){try{calTasks=JSON.parse(localStorage.getItem('tjCalendarTasks')||'[]')}catch(e){calTasks=[]}}
-let hubPushTimer=null;
-function pushHubSoon(){clearTimeout(hubPushTimer);hubPushTimer=setTimeout(()=>{if(typeof pushToSheet==='function')pushToSheet(true);},1500);}
+/* ================= v9.0 MIRROR SYNC ENGINE ================= */
+window.HUB_DEVICE_ID=localStorage.getItem('tjDeviceId')||('dev_'+Math.random().toString(36).slice(2,10));
+localStorage.setItem('tjDeviceId',window.HUB_DEVICE_ID);
+let hubPushTimer=null,syncBusy=false,lastLocalChangeAt=0;
+const OFFLINE_MSG='Unable to sync. Your latest change is temporarily saved on this device and will retry once internet connection returns.';
+function setSyncStatus(cls,txt){const c=$('syncChip');if(!c)return;c.className=cls;const t=$('syncChipTxt');if(t)t.textContent=txt;}
+function stampSynced_(){const now=new Date();localStorage.setItem('tjLastSync',now.toISOString());setSyncStatus('ok','Synced \u2713 '+now.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}));const lbl=$('lastSyncLbl');if(lbl)lbl.textContent='Last synced: '+now.toLocaleString();}
+function pushHubSoon(){
+  lastLocalChangeAt=Date.now();
+  clearTimeout(hubPushTimer);
+  hubPushTimer=setTimeout(async()=>{
+    if(!localStorage.getItem('tjLicensingSyncUrl'))return;
+    if(!navigator.onLine){localStorage.setItem('tjPendingSync','1');setSyncStatus('off',OFFLINE_MSG);return;}
+    try{
+      setSyncStatus('busy','Syncing...');
+      await pushToSheet(true);
+      localStorage.removeItem('tjPendingSync');
+      stampSynced_();
+    }catch(e){localStorage.setItem('tjPendingSync','1');setSyncStatus('err','Sync failed \u2014 auto-retry on reconnect');}
+  },1200);
+}
+async function syncNow(manual){
+  const url=localStorage.getItem('tjLicensingSyncUrl')||'';
+  if(!url){if(manual)alert('I-save muna ang Web App URL sa Sync Setup.');setSyncStatus('err','Walang Sync URL');return;}
+  if(syncBusy)return;
+  if(!navigator.onLine){localStorage.setItem('tjPendingSync','1');setSyncStatus('off',OFFLINE_MSG);if(manual)alert(OFFLINE_MSG);return;}
+  syncBusy=true;
+  try{
+    setSyncStatus('busy','Syncing...');
+    await pushToSheet(true);
+    await pullFromSheet(true);
+    localStorage.removeItem('tjPendingSync');
+    stampSynced_();
+    if(manual)setTimeout(()=>alert('\u2705 Sync complete! Ang lahat ng data sa device na ito ay tugma na sa Google Sheet.'),50);
+  }catch(e){
+    setSyncStatus('err','Sync failed \u2014 auto-retry');
+    if(manual)alert('Sync failed: '+(e.message||e));
+  }finally{syncBusy=false;}
+}
+/* auto-refresh bawat 30 segundo: pull lang, walang buong page reload */
+setInterval(async()=>{
+  if(document.hidden||syncBusy)return;
+  if(!localStorage.getItem('tjLicensingSyncUrl'))return;
+  if(Date.now()-lastLocalChangeAt<8000)return; /* huwag i-override ang kaka-type lang */
+  if(!navigator.onLine){setSyncStatus('off',OFFLINE_MSG);return;}
+  syncBusy=true;
+  try{setSyncStatus('busy','Refreshing...');await pullFromSheet(true);stampSynced_();}
+  catch(e){setSyncStatus('err','Sync failed \u2014 magre-retry');}
+  finally{syncBusy=false;}
+},30000);
+/* pag bumalik ang internet, i-upload agad ang mga naipong changes */
+window.addEventListener('online',()=>{setSyncStatus('busy','Reconnected \u2014 syncing...');syncNow(false);});
+window.addEventListener('offline',()=>setSyncStatus('off',OFFLINE_MSG));
+/* v9.1: Lapse screenshot + Form link para sa agent */
+function h2cLoad_(){
+  return new Promise((res,rej)=>{
+    if(window.html2canvas)return res(window.html2canvas);
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload=()=>res(window.html2canvas);
+    s.onerror=()=>rej(new Error('Hindi ma-load ang screenshot tool. Kailangan ng internet.'));
+    document.head.appendChild(s);
+  });
+}
+async function lapseScreenshot(){
+  if(!(typeof anticipatedLapseRows!=='undefined'&&anticipatedLapseRows.length)){alert('Mag-upload muna ng Anticipated Lapse PDF bago mag-screenshot.');return;}
+  try{
+    const h2c=await h2cLoad_();
+    const el=$('lapseShotArea');
+    const canvas=await h2c(el,{scale:2,backgroundColor:'#ffffff',windowWidth:Math.max(el.scrollWidth+40,1200)});
+    const f=$('lapseAgentFilter');
+    const agent=((f&&f.value)||'ALL_AGENTS').replace(/[^a-z0-9]+/gi,'_').slice(0,40)||'ALL_AGENTS';
+    const a=document.createElement('a');
+    a.href=canvas.toDataURL('image/png');
+    a.download='LapseReport_'+agent+'_'+new Date().toISOString().slice(0,10)+'.png';
+    document.body.appendChild(a);a.click();a.remove();
+  }catch(e){alert('Screenshot failed: '+(e.message||e));}
+}
+function copyFormLinkForAgent(){
+  const l=(typeof appFormLink_==='function')?appFormLink_():'';
+  if(!l){alert('I-save muna ang Web App URL sa Sync Setup para ma-generate ang form link.');return;}
+  const msg='Hi! Ito ang Team Josh Application Form link \u2014 paki-fill out (o i-send sa applicant mo):\n\n'+l;
+  const done=()=>alert('\u2705 Form link copied! I-paste na lang sa Messenger para sa agent/applicant.\n\n'+l);
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(msg).then(done).catch(()=>prompt('Copy this link:',msg));
+  else prompt('Copy this link:',msg);
+}
+/* =============== END SYNC ENGINE =============== */
 function saveCalStore(){localStorage.setItem('tjCalendarTasks',JSON.stringify(calTasks));pushHubSoon();}
 function mergeHubDataFromSheet(hd){
   try{
-    if(Array.isArray(hd.clientDetails)){clientDetails=mergeByIdentity_(clientDetails||[],hd.clientDetails);localStorage.setItem('tjClientDetails',JSON.stringify(clientDetails));if(typeof renderClientDetails==='function')renderClientDetails();}
-    if(Array.isArray(hd.linkVault)){linkVault=mergeByIdentity_(linkVault||[],hd.linkVault);}
-    if(Array.isArray(hd.spielVault)){spielVault=mergeByIdentity_(spielVault||[],hd.spielVault);}
+    if(hd.deletedIds&&typeof hd.deletedIds==='object'){deletedIds={...hd.deletedIds,...deletedIds};localStorage.setItem('tjDeletedIds',JSON.stringify(deletedIds));}
+    if(Array.isArray(hd.clientDetails)){clientDetails=applyTombstones_(mergeByIdentity_(clientDetails||[],hd.clientDetails));localStorage.setItem('tjClientDetails',JSON.stringify(clientDetails));if(typeof renderClientDetails==='function')renderClientDetails();}
+    if(Array.isArray(hd.linkVault)){linkVault=applyTombstones_(mergeByIdentity_(linkVault||[],hd.linkVault));}
+    if(Array.isArray(hd.spielVault)){spielVault=applyTombstones_(mergeByIdentity_(spielVault||[],hd.spielVault));}
     if(Array.isArray(hd.linkVault)||Array.isArray(hd.spielVault)){localStorage.setItem('tjLicensingLinks',JSON.stringify(linkVault));localStorage.setItem('tjLicensingSpiels',JSON.stringify(spielVault));if(typeof renderLinkVault==='function')renderLinkVault();if(typeof renderSpielVault==='function')renderSpielVault();}
     if(Array.isArray(hd.rookieTasks)&&hd.rookieTasks.length){rookieTasks=mergeByIdentity_(rookieTasks||[],hd.rookieTasks);}
-    if(hd.rookieTargets&&typeof hd.rookieTargets==='object'){rookieTargets={...hd.rookieTargets,...(rookieTargets||{})};}
-    if(hd.rookieActivity&&typeof hd.rookieActivity==='object'){const merged={...hd.rookieActivity};Object.keys(rookieActivity||{}).forEach(d=>{merged[d]={...(merged[d]||{}),...(rookieActivity[d]||{})};});rookieActivity=merged;}
+    if(hd.rookieTargets&&typeof hd.rookieTargets==='object'){rookieTargets={...(rookieTargets||{}),...hd.rookieTargets};}
+    if(hd.rookieActivity&&typeof hd.rookieActivity==='object'){const merged={...(rookieActivity||{})};Object.keys(hd.rookieActivity).forEach(d=>{merged[d]={...(merged[d]||{}),...(hd.rookieActivity[d]||{})};});rookieActivity=merged;}
     localStorage.setItem('tjRookieTargets',JSON.stringify(rookieTargets));localStorage.setItem('tjRookieActivity',JSON.stringify(rookieActivity));localStorage.setItem('tjRookieTasks',JSON.stringify(rookieTasks));
     if(typeof renderRookieChallenge==='function')renderRookieChallenge();
-    if(hd.branding&&!localStorage.getItem('tjHubBranding')){localStorage.setItem('tjHubBranding',JSON.stringify(hd.branding));if(typeof applyBranding==='function')applyBranding(hd.branding);}
+    if(hd.branding!==undefined){
+      const curB=localStorage.getItem('tjHubBranding')||'';
+      const newB=hd.branding?JSON.stringify(hd.branding):'';
+      if(newB!==curB){
+        if(hd.branding){localStorage.setItem('tjHubBranding',newB);}else{localStorage.removeItem('tjHubBranding');}
+        if(typeof applyBranding==='function')applyBranding(hd.branding||{});
+      }
+    }
+    if(Array.isArray(hd.lapseRows)&&(hd.lapseRows.length||!(typeof anticipatedLapseRows!=='undefined'&&anticipatedLapseRows.length))){
+      if(typeof anticipatedLapseRows!=='undefined'&&JSON.stringify(hd.lapseRows)!==JSON.stringify(anticipatedLapseRows)){
+        anticipatedLapseRows=hd.lapseRows;localStorage.setItem('tjAnticipatedLapseRows',JSON.stringify(anticipatedLapseRows));
+        if(typeof renderLapseReport==='function')try{renderLapseReport();}catch(e){}
+      }
+    }
+    if(typeof hd.lapseTemplate==='string'&&hd.lapseTemplate&&hd.lapseTemplate!==localStorage.getItem('tjLapseReminderTemplate')){
+      localStorage.setItem('tjLapseReminderTemplate',hd.lapseTemplate);
+    }
+    if(Array.isArray(hd.hubUsers)&&hd.hubUsers.length){
+      try{
+        const m=new Map();(hubUsers||[]).forEach(x=>{if(x&&x.u)m.set(x.u,x);});
+        hd.hubUsers.forEach(x=>{if(x&&x.u&&!m.has(x.u))m.set(x.u,x);});
+        if(m.size!==(hubUsers||[]).length){hubUsers=[...m.values()];localStorage.setItem('tjHubUsers',JSON.stringify(hubUsers));if(typeof renderHubUsers==='function')renderHubUsers();}
+      }catch(e){}
+    }
     if(typeof renderDashboard==='function')renderDashboard();
   }catch(e){console.error('hubData merge error',e);}
 }
@@ -1918,7 +2218,7 @@ function saveCalTask(){
     title, type:$('calType').value, color:calSelColor,
     date:$('calDate').value, start:$('calStart').value, end:$('calEnd').value,
     repeat:$('calRepeat').value, agent:$('calAgent').value, notes:$('calNotes').value.trim(),
-    onCalendar:$('calAddToCal').checked, done:false, created:new Date().toISOString()
+    onCalendar:$('calAddToCal').checked, done:false, created:new Date().toISOString(), updatedAt:new Date().toISOString(), deviceId:(window.HUB_DEVICE_ID||'')
   };
   if(calEditId){const i=calTasks.findIndex(x=>x.id===calEditId);if(i>-1){t.done=calTasks[i].done;t.created=calTasks[i].created;calTasks[i]=t;}}
   else calTasks.push(t);
@@ -1933,7 +2233,7 @@ function editCalTask(id){
   calEditId=id;$('calSaveBtn').textContent='Update Task';
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function delCalTask(id){if(!confirm('Delete this task?'))return;calTasks=calTasks.filter(t=>t.id!==id);saveCalStore();renderCalTaskLists();renderCalendar();}
+function delCalTask(id){if(!confirm('Delete this task?'))return;calTasks=calTasks.filter(t=>t.id!==id);markDeleted(id);saveCalStore();renderCalTaskLists();renderCalendar();}
 function toggleCalDone(id){const t=calTasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;saveCalStore();renderCalTaskLists();renderCalendar();}
 
 function calTaskRow(t){
@@ -2047,7 +2347,7 @@ updateFormLinkBox();
 /* ================= v6.2 LOGIN GATE ================= */
 let hubUsers=[];
 function loadHubUsers(){try{hubUsers=JSON.parse(localStorage.getItem('tjHubUsers')||'[]')}catch(e){hubUsers=[]}}
-function saveHubUsers(){localStorage.setItem('tjHubUsers',JSON.stringify(hubUsers));}
+function saveHubUsers(){localStorage.setItem('tjHubUsers',JSON.stringify(hubUsers));if(typeof pushHubSoon==='function')pushHubSoon();}
 async function hubHash(s){
   try{
     const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('tjhub::'+s));
@@ -2279,8 +2579,108 @@ try{
   if(D.branding&&!localStorage.getItem('tjHubBranding'))localStorage.setItem('tjHubBranding',JSON.stringify(D.branding));
 }catch(e){}
 loadBrandingAndApply();populateBrandingForm();
-if(localStorage.getItem('tjLicensingSyncUrl')){setTimeout(()=>{try{pullFromSheet(true);}catch(e){}},800);}
+if(localStorage.getItem('tjLicensingSyncUrl')){
+  setTimeout(()=>{try{
+    if(localStorage.getItem('tjPendingSync')){syncNow(false);}
+    else{setSyncStatus('busy','Loading data...');pullFromSheet(true).then(()=>stampSynced_()).catch(()=>setSyncStatus('err','Load failed \u2014 magre-retry sa 30s'));}
+  }catch(e){}},800);
+}else{setSyncStatus('err','I-set up ang Sync URL');}
+try{const ls=localStorage.getItem('tjLastSync');if(ls){const lbl=$('lastSyncLbl');if(lbl)lbl.textContent='Last synced: '+new Date(ls).toLocaleString();}}catch(e){}
 /* =============== END BRANDING + SHARE COPY =============== */
+
+
+
+/* Anticipated Lapse Report module */
+const LAPSE_TEMPLATE_DEFAULT=`Good evening {{SALUTATION}} {{FIRST_NAME}},
+
+A friendly reminder on your Pru Life Premium Due.
+Your last due was:
+
+Policy Number: {{POLICY_NUMBER}}
+Owner Name: {{OWNER_NAME}}
+Plan Name: {{PLAN_NAME}}
+Premium: {{PREMIUM}}
+
+{{MISSED_DUE_DATES}}
+
+There's a 20-day grace period after your due date to settle the payment.
+
+Kindly make sure to settle within that period to avail the LOYALTY BONUS, avoid LAPSE of your policy, and keep your protection active.
+
+If you're on Auto Debit, make sure the bank has funds 5 days after the due date for rebilling purposes.
+
+If using GCash, kindly settle 10 days before the due date.
+
+If using Maya, settle 3 days before the due date.
+
+You may also pay via your PRU Services Account:
+https://pruservices.prulifeuk.com.ph/welcome
+
+You may also pay through the payment link using your debit/credit card for real-time crediting:
+https://www.prulifeuk.com.ph/en/payments/
+
+Please take note that 3 consecutive months of delayed payment may result in policy lapse.
+
+Thank you and have a nice day!
+
+**If you're already paid, kindly ignore this message.
+
+Best regards,
+
+Joshua Senerez
+PRU Life UK | Unit Manager
+Premium Now | PRU Life UK`;
+let anticipatedLapseRows=[];try{anticipatedLapseRows=JSON.parse(localStorage.getItem('tjAnticipatedLapseRows')||'[]')||[]}catch(e){anticipatedLapseRows=[]}
+function lapseEl_(id){return document.getElementById(id)}
+function lapseVal_(id){const e=lapseEl_(id);return e?e.value:''}
+function lapseSafe_(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function parsePrismDate_(v){const m=String(v||'').trim().match(/(\d{1,2})\s+([A-Z]{3})\s+(\d{4})/i);if(!m)return'';const mm={JAN:0,FEB:1,MAR:2,APR:3,MAY:4,JUN:5,JUL:6,AUG:7,SEP:8,OCT:9,NOV:10,DEC:11}[m[2].toUpperCase()];const d=new Date(+m[3],mm,+m[1]);return isNaN(d)?'':d.toISOString().slice(0,10)}
+function dateOnly_(v){if(!v)return null;const d=new Date(v+'T00:00:00');return isNaN(d)?null:d}
+function formatDatePh_(v){const d=dateOnly_(v);return d?d.toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}):''}
+function daysBetween_(a,b){return Math.floor((b-a)/86400000)}
+function addMonthsSafe_(d,n){const x=new Date(d);const day=x.getDate();x.setDate(1);x.setMonth(x.getMonth()+n);const last=new Date(x.getFullYear(),x.getMonth()+1,0).getDate();x.setDate(Math.min(day,last));return x}
+function delayInfo_(paidTo){
+  const due=dateOnly_(paidTo),today=new Date();today.setHours(0,0,0,0);
+  if(!due)return{days:0,totalMonths:0,extraDays:0,cls:'green',label:'No date'};
+  if(today<due)return{days:0,totalMonths:0,extraDays:0,cls:'green',label:'Not yet due'};
+  const elapsedDays=Math.max(0,daysBetween_(due,today));
+  let fullMonths=0,cursor=new Date(due),next=addMonthsSafe_(cursor,1);
+  while(next<=today&&fullMonths<120){cursor=next;fullMonths++;next=addMonthsSafe_(due,fullMonths+1)}
+  const extraDays=Math.max(0,daysBetween_(cursor,today));
+  const totalMonths=1+fullMonths; // On the Paid To / due date, the unpaid premium is already 1 month delayed.
+  const cls=(totalMonths>2||(totalMonths===2&&extraDays>=15))?'red':(totalMonths>=2?'orange':'yellow');
+  const monthText=totalMonths+' Mo.';
+  const dayText=extraDays?(' '+extraDays+' Day'+(extraDays===1?'':'s')):'';
+  return{days:elapsedDays,totalMonths,extraDays,cls,label:monthText+dayText}
+}
+function monthsPaid_(effectivity,paidTo){const a=dateOnly_(effectivity),b=dateOnly_(paidTo);if(!a||!b)return 0;let m=(b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth());if(b.getDate()>=a.getDate())m++;return Math.max(0,m)}
+function firstName_(owner){let s=String(owner||'').trim();if(s.includes(','))s=s.split(',')[1].trim();return (s.split(/\s+/)[0]||'Client').replace(/[^A-Za-zÀ-ÿ'-]/g,'')}
+function missedDueDates_(paidTo){const d=dateOnly_(paidTo),today=new Date();today.setHours(0,0,0,0);if(!d||today<=d)return'⚠️ Last due date: '+formatDatePh_(paidTo);let out=[],i=0,x=new Date(d);while(x<today&&i<12){out.push('⚠️ '+x.toLocaleDateString('en-PH',{month:'long',day:'numeric',year:'numeric'}));x=addMonthsSafe_(x,1);i++}return out.join('\n')}
+function reminderForLapse_(r){let t=localStorage.getItem('tjLapseReminderTemplate')||LAPSE_TEMPLATE_DEFAULT;const sal=r.gender==='Female'?"M'":r.gender==='Male'?"S'":'';return t.replaceAll('{{SALUTATION}}',sal).replaceAll('{{FIRST_NAME}}',firstName_(r.owner)).replaceAll('{{POLICY_NUMBER}}',r.policyNo||'').replaceAll('{{OWNER_NAME}}',r.owner||'').replaceAll('{{PLAN_NAME}}',r.planName||'').replaceAll('{{PREMIUM}}','₱'+Number(r.premium||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2})).replaceAll('{{MISSED_DUE_DATES}}',missedDueDates_(r.paidTo))}
+async function copyTextSafe_(txt){try{await navigator.clipboard.writeText(txt);alert('Reminder message copied.')}catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('Reminder message copied.')}}
+function lapseMessengerIcon_(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.15 2 11.27c0 2.92 1.46 5.52 3.74 7.22V22l3.42-1.88c.9.25 1.85.39 2.84.39 5.52 0 10-4.15 10-9.24S17.52 2 12 2Zm1.05 12.47-2.55-2.72-4.98 2.72 5.48-5.82 2.61 2.72 4.92-2.72-5.48 5.82Z"/></svg>'}
+function clientMessengerByPolicy_(policyNo){const p=String(policyNo||'').trim();const c=(typeof clientDetails!=='undefined'&&Array.isArray(clientDetails))?clientDetails.find(x=>String(x.policyNo||'').trim()===p):null;return c&&String(c.fbLink||'').trim()?String(c.fbLink).trim():''}
+async function copyAndOpenLapseMessenger(id){
+  const r=anticipatedLapseRows.find(x=>x.id===id);if(!r)return;
+  const link=clientMessengerByPolicy_(r.policyNo);
+  if(link)window.open(link,'_blank','noopener');
+  await copyTextSafe_(reminderForLapse_(r));
+  if(!link)alert('Reminder copied. Walang Messenger / FB link na nakita sa Client Details para sa policy number '+(r.policyNo||'')+'.');
+}
+function copyLapseReminder(id){return copyAndOpenLapseMessenger(id)}
+function updateLapseGender(id,v){const r=anticipatedLapseRows.find(x=>x.id===id);if(r){r.gender=v;localStorage.setItem('tjAnticipatedLapseRows',JSON.stringify(anticipatedLapseRows));if(typeof pushHubSoon==='function')pushHubSoon();renderLapseReport()}}
+function populateLapseAgentFilter_(){const el=lapseEl_('lapseAgentFilter');if(!el)return;const cur=el.value;const agents=[...new Set(anticipatedLapseRows.map(r=>r.agentName).filter(Boolean))].sort();el.innerHTML='<option value="">All Agents</option>'+agents.map(a=>`<option value="${lapseSafe_(a)}">${lapseSafe_(a)}</option>`).join('');if(agents.includes(cur))el.value=cur}
+function renderLapseReport(){
+  try{const st=$('lapseShotTitle');if(st){const f=$('lapseAgentFilter');st.textContent=(anticipatedLapseRows&&anticipatedLapseRows.length)?('ANTICIPATED LAPSE REPORT — '+((f&&f.value)||'All Agents')+' — as of '+new Date().toLocaleDateString()):'';}}catch(e){}const body=lapseEl_('lapseRows');if(!body)return;populateLapseAgentFilter_();const af=lapseVal_('lapseAgentFilter'),q=lapseVal_('lapseSearch').toLowerCase();let rows=anticipatedLapseRows.filter(r=>(!af||r.agentName===af)&&(!q||[r.agentName,r.policyNo,r.owner,r.planName].join(' ').toLowerCase().includes(q)));const delayed=rows.filter(r=>delayInfo_(r.paidTo).totalMonths>0),red=rows.filter(r=>delayInfo_(r.paidTo).cls==='red'),pr=rows.filter(r=>monthsPaid_(r.effectivity,r.paidTo)<=13);const sum=lapseEl_('lapseSummary');if(sum)sum.innerHTML=[['Visible Policies',rows.length,'blue'],['Overdue',delayed.length,'orange'],['Red / Critical',red.length,'red'],['1–13 Mo. Paid',pr.length,'green'],['Agents',[...new Set(rows.map(r=>r.agentName))].length,'purple']].map(c=>`<div class="metric ${c[2]}"><div class="num">${c[1]}</div><div class="label">${c[0]}</div></div>`).join('');if(!rows.length){body.innerHTML='<tr><td colspan="11" style="text-align:center;padding:20px;font-weight:900;color:#64748b">No Anticipated Lapse records for this filter.</td></tr>';return}body.innerHTML=rows.map(r=>{const di=delayInfo_(r.paidTo),mp=monthsPaid_(r.effectivity,r.paidTo),within=mp<=13;return `<tr><td><b>${lapseSafe_(r.agentName)}</b><br><small>${lapseSafe_(r.agentCode||'')}</small></td><td><b>${lapseSafe_(r.policyNo)}</b></td><td>${lapseSafe_(r.owner)}</td><td class="lapse-plan">${lapseSafe_(r.planName||'')}</td><td><select onchange="updateLapseGender('${r.id}',this.value)"><option value="" ${!r.gender?'selected':''}>Select</option><option value="Female" ${r.gender==='Female'?'selected':''}>Female (M')</option><option value="Male" ${r.gender==='Male'?'selected':''}>Male (S')</option></select></td><td>₱${Number(r.premium||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>${formatDatePh_(r.paidTo)}</td><td><span class="lapse-delay ${di.cls}">${di.label}</span></td><td>${formatDatePh_(r.effectivity)}</td><td><div class="pr-indicator"><span class="${within?'pr-on':'pr-off'}">${mp} Mo. Paid</span></div></td><td><button class="lapse-copy-icon" onclick="copyAndOpenLapseMessenger('${r.id}')" title="Copy reminder and open Messenger" aria-label="Copy reminder and open Messenger">${lapseMessengerIcon_()}</button></td></tr>`}).join('')}
+function clearLapseReport(){if(!anticipatedLapseRows.length)return;if(!confirm('Clear all uploaded Anticipated Lapse records?'))return;anticipatedLapseRows=[];localStorage.removeItem('tjAnticipatedLapseRows');renderLapseReport();lapseEl_('lapseStatus').textContent='Report cleared.'}
+function groupPdfItemsByLine_(items){const lines=[];items.forEach(it=>{const x=it.transform[4],y=it.transform[5],txt=String(it.str||'').trim();if(!txt)return;let line=lines.find(l=>Math.abs(l.y-y)<2.5);if(!line){line={y,items:[]};lines.push(line)}line.items.push({x,s:txt})});lines.forEach(l=>l.items.sort((a,b)=>a.x-b.x));return lines.sort((a,b)=>b.y-a.y)}
+function textInRange_(lines,y,x1,x2,tol){return lines.filter(l=>Math.abs(l.y-y)<=tol).flatMap(l=>l.items).filter(i=>i.x>=x1&&i.x<x2).sort((a,b)=>a.x-b.x).map(i=>i.s).join(' ').replace(/\s+/g,' ').trim()}
+async function uploadAnticipatedLapsePdf(event){const file=event.target.files&&event.target.files[0];if(!file)return;const status=lapseEl_('lapseStatus');status.textContent='Reading PDF...';try{if(!window.pdfjsLib)throw new Error('PDF reader library did not load. Please connect to the internet and reopen the file.');pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const buf=await file.arrayBuffer(),pdf=await pdfjsLib.getDocument({data:buf}).promise;let out=[],agentName='',agentCode='';for(let pn=1;pn<=pdf.numPages;pn++){status.textContent=`Reading page ${pn} of ${pdf.numPages}...`;const pg=await pdf.getPage(pn),tc=await pg.getTextContent(),lines=groupPdfItemsByLine_(tc.items);for(const l of lines){const txt=l.items.map(i=>i.s).join(' ').replace(/\s+/g,' ').trim();let am=txt.match(/^AG:\s*(\d+)\s*-\s*(.+)$/i);if(am){agentCode=am[1];agentName=am[2].trim();continue}const pol=l.items.find(i=>/^\d{8}$/.test(i.s)&&i.x<150);if(!pol)continue;const y=l.y;const paidRaw=textInRange_(lines,y,300,420,6),effRaw=textInRange_(lines,y,430,570,6);const all=l.items.map(i=>i.s);const money=all.filter(x=>/^[\d,]+\.\d{2}$/.test(x));const premiumRaw=money.length>=2?money[money.length-2]:(money[0]||'');let owner=textInRange_(lines,y,110,230,10);owner=owner.trim();const planName=textInRange_(lines,y,230,333,10).replace(/\s+/g,' ').trim();out.push({id:'lap_'+pn+'_'+pol.s,agentCode,agentName,policyNo:pol.s,owner,planName,paidTo:parsePrismDate_(paidRaw),effectivity:parsePrismDate_(effRaw),premium:Number(String(premiumRaw).replace(/,/g,''))||0,gender:''})}}const oldMap={};anticipatedLapseRows.forEach(r=>oldMap[r.agentName+'|'+r.policyNo]=r);out.forEach(r=>{const old=oldMap[r.agentName+'|'+r.policyNo]||{};r.gender=old.gender||'';if(!r.planName)r.planName=old.planName||''});anticipatedLapseRows=out.filter(r=>r.policyNo&&r.owner);localStorage.setItem('tjAnticipatedLapseRows',JSON.stringify(anticipatedLapseRows));if(typeof pushHubSoon==='function')pushHubSoon();renderLapseReport();status.textContent=`Loaded ${anticipatedLapseRows.length} policies from ${pdf.numPages} PDF page(s).`;event.target.value=''}catch(e){console.error(e);status.textContent='PDF upload failed: '+e.message;alert('Could not read the PDF: '+e.message)}}
+function saveLapseTemplate(){const e=lapseEl_('lapseReminderTemplate');if(!e)return;localStorage.setItem('tjLapseReminderTemplate',e.value);if(typeof pushHubSoon==='function')pushHubSoon();alert('Reminder template saved.')}
+function resetLapseTemplate(){localStorage.removeItem('tjLapseReminderTemplate');const e=lapseEl_('lapseReminderTemplate');if(e)e.value=LAPSE_TEMPLATE_DEFAULT;alert('Default reminder restored.')}
+function initLapseUi_(){const e=lapseEl_('lapseReminderTemplate');if(e&&!e.value)e.value=localStorage.getItem('tjLapseReminderTemplate')||LAPSE_TEMPLATE_DEFAULT;renderLapseReport()}
+const _originalShowTabForLapse=window.showTab;window.showTab=function(id,btn){_originalShowTabForLapse(id,btn);if(id==='anticipatedLapseTab')initLapseUi_()};
+document.addEventListener('DOMContentLoaded',initLapseUi_);
 
 </script>
 
