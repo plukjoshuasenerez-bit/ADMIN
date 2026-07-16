@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TEAM JOSH LICENSING HUB v9.5 — DELETE FIXED</title>
+<title>TEAM JOSH LICENSING HUB v9.6 — MIRROR FIXED</title>
 <style>
 :root{--blue:#073b8e;--blue2:#0b5fc7;--navy:#031b45;--gold:#ffd23f;--gold2:#f5b301;--bg:#f4f8ff;--line:#d8e6fb;--text:#172033;--muted:#64748b;--red:#d62839;--green:#0fa968;--orange:#ff8c1a;--purple:#7b2cbf;--cyan:#00a7c7}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#eef5ff 0%,#fff 60%,#f8fbff 100%)}
@@ -672,7 +672,7 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
   </div>
 </section>
 
-<section id="syncTab"><div class="card"><div class="section-title"><h2>SYNC</h2></div><div class="grid"><div class="field span4"><label>Google Apps Script Web App URL (one link syncs everything)</label><input id="syncUrl" placeholder="Paste deployment URL here"></div><div class="field span4"><label>Public Application Form Link (share to applicants — they register a username &amp; password first)</label><input id="formLinkBox" readonly placeholder="Save your Web App URL first — the shareable form link will appear here" onclick="this.select()"></div></div><div class="tools" style="margin-top:12px"><button onclick="saveSyncUrl()">Save URL</button><button class="btn-green" onclick="syncNow(true)">&#128260; Sync Now</button><button class="btn-soft" onclick="testSyncConnection()">Test Connection</button><button class="btn-soft" onclick="copyScript()">Copy Appscript</button><button class="btn-green" onclick="copyFormLink()">Copy Formlink</button><button class="btn-soft" onclick="openFormLink()">Open Form</button><button class="btn-green" onclick="pushToSheet()">Manual Push Data</button><button class="btn-yellow" onclick="pullFromSheet()">Manual Load Data</button><span id="lastSyncLbl" class="note" style="align-self:center"></span><button class="btn-soft" onclick="downloadShareCopy()">Download Auto-Connect Copy</button></div><p class="note"><b>One link, everything synced:</b> Masterlist / Application Form (Licensing_Master), Client Details, Links, Spiel, Calendar &amp; To-dos, Rookie Challenge, and Admin Activity all sync through this single Web App URL. Setup: click <b>Copy Appscript</b> &rarr; in your Google Sheet open Extensions &gt; Apps Script &rarr; paste &amp; save &rarr; Deploy as Web App (Execute as Me, access: Anyone) &rarr; paste the URL above &rarr; Save URL &rarr; Test Connection. If you deployed an old version, re-deploy via Manage Deployments &gt; Edit &gt; New Version (same URL keeps working). The Form Link opens the application form directly &mdash; <b>walang login</b>, fill out lang at Submit. Kung parehong Name at Contact Number ang i-submit ulit, mag-a-update lang ang record (hindi magdodoble). <b>PARA HINDI MAWALA ANG LINK SA IBANG DEVICE:</b> i-click ang <b>Download Auto-Connect Copy</b> &mdash; kopya ito ng hub na <b>naka-embed na ang Web App URL at branding sa loob mismo ng file</b>. Iyon ang i-send/i-save sa ibang devices: pagbukas, konektado agad at auto-load ang data, hindi na kailangan mag-paste ng URL kahit kailan. Bonus: kung form link lang ang hawak mo (may ?page=form), pwede mo iyon i-paste sa URL box &mdash; automatic aalisin ang ?page=form at magiging Web App URL.</p></div>
+<section id="syncTab"><div class="card"><div class="section-title"><h2>SYNC</h2></div><div class="grid"><div class="field span4"><label>Google Apps Script Web App URL (one link syncs everything)</label><input id="syncUrl" placeholder="Paste deployment URL here"></div><div class="field span4"><label>Public Application Form Link (share to applicants — they register a username &amp; password first)</label><input id="formLinkBox" readonly placeholder="Save your Web App URL first — the shareable form link will appear here" onclick="this.select()"></div></div><div class="tools" style="margin-top:12px"><button onclick="saveSyncUrl()">Save URL</button><button class="btn-green" onclick="syncNow(true)">&#128260; Sync Now</button><button class="btn-soft" onclick="syncDoctor()">&#129658; Sync Doctor</button><button class="btn-soft" onclick="testSyncConnection()">Test Connection</button><button class="btn-soft" onclick="copyScript()">Copy Appscript</button><button class="btn-green" onclick="copyFormLink()">Copy Formlink</button><button class="btn-soft" onclick="openFormLink()">Open Form</button><button class="btn-green" onclick="pushToSheet()">Manual Push Data</button><button class="btn-yellow" onclick="pullFromSheet()">Manual Load Data</button><span id="lastSyncLbl" class="note" style="align-self:center"></span><button class="btn-soft" onclick="downloadShareCopy()">Download Auto-Connect Copy</button></div><p class="note"><b>One link, everything synced:</b> Masterlist / Application Form (Licensing_Master), Client Details, Links, Spiel, Calendar &amp; To-dos, Rookie Challenge, and Admin Activity all sync through this single Web App URL. Setup: click <b>Copy Appscript</b> &rarr; in your Google Sheet open Extensions &gt; Apps Script &rarr; paste &amp; save &rarr; Deploy as Web App (Execute as Me, access: Anyone) &rarr; paste the URL above &rarr; Save URL &rarr; Test Connection. If you deployed an old version, re-deploy via Manage Deployments &gt; Edit &gt; New Version (same URL keeps working). The Form Link opens the application form directly &mdash; <b>walang login</b>, fill out lang at Submit. Kung parehong Name at Contact Number ang i-submit ulit, mag-a-update lang ang record (hindi magdodoble). <b>PARA HINDI MAWALA ANG LINK SA IBANG DEVICE:</b> i-click ang <b>Download Auto-Connect Copy</b> &mdash; kopya ito ng hub na <b>naka-embed na ang Web App URL at branding sa loob mismo ng file</b>. Iyon ang i-send/i-save sa ibang devices: pagbukas, konektado agad at auto-load ang data, hindi na kailangan mag-paste ng URL kahit kailan. Bonus: kung form link lang ang hawak mo (may ?page=form), pwede mo iyon i-paste sa URL box &mdash; automatic aalisin ang ?page=form at magiging Web App URL.</p></div>
   <div class="card"><div class="section-title"><h2>Branding &amp; Theme</h2><span class="note">Pumili ng preset sa Color Presets (live preview agad), gumamit ng sariling Primary/Accent colors, o i-click ang <b>Auto Colors from Logo</b> para kunin ang colorway mula sa logo mo (automatic din ito pag nag-upload ka ng bagong logo). Tapos i-click ang <b>Apply &amp; Save Branding</b>. Kasama ang branding sa Share Copy at sa public Application Portal. <b>Reset to Default</b> para bumalik sa dating itsura.</span></div>
     <div class="grid">
       <div class="field"><label>Team Name</label><input id="brTeamName" placeholder="Team Josh"></div>
@@ -1377,7 +1377,9 @@ function syncErrHelp_(msg){
 }
 async function testSyncConnection(){try{let data=await jsonpSync_({action:'test'});if(data.ok){if(data.version){alert('CONNECTED! Apps Script version '+data.version+' - complete sync is active (Masterlist, Client Details, Links, Spiel, Calendar, Rookie, Branding).');}else{alert('Connected, PERO LUMANG Apps Script pa ang naka-deploy kaya hindi pumapasok sa sheet ang Calendar, Client Details, atbp.\n\nAyusin: (1) click Copy Appscript, (2) sa Google Sheet: Extensions > Apps Script, burahin laman at i-paste ang bago, Save, (3) Deploy > Manage deployments > Edit (lapis) > Version: New version > Deploy.\n\nHindi magbabago ang URL mo.');}}else alert('Script error: '+syncErrHelp_(data.error||data.message||JSON.stringify(data)));}catch(e){alert('Connection failed: '+e.message);}}
 async function pushToSheet(silent){let url=$('syncUrl')?.value||'';if(!url){if(!silent)alert('Paste Web App URL first.');return}try{await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'mergeAll',data:applicants,adminData:adminData,calendarTasks:(typeof calTasks!=='undefined'?calTasks:[]),hubData:{clientDetails:clientDetails||[],linkVault:linkVault||[],spielVault:spielVault||[],rookieTasks:rookieTasks||[],rookieTargets:rookieTargets||{},rookieActivity:rookieActivity||{},branding:JSON.parse(localStorage.getItem('tjHubBranding')||'null'),lapseRows:(typeof anticipatedLapseRows!=='undefined'?anticipatedLapseRows:[]),lapseTemplate:localStorage.getItem('tjLapseReminderTemplate')||undefined,hubUsers:JSON.parse(localStorage.getItem('tjHubUsers')||'[]'),deletedIds:deletedIds||{}}})});if(!silent)alert('Safe push sent. Wait 3 seconds, then click Load from Google Sheet to verify.')}catch(e){if(!silent)alert('Push failed: '+e.message)}}
-async function pullFromSheet(silent){try{let data=await jsonpSync_({action:'loadAll'});if(!data.ok){if(!silent)alert('Load error: '+syncErrHelp_(data.error||data.message||JSON.stringify(data)));return}applicants=applyTombstones_(mergeByIdentity_(applicants,data.data||[]));if(data.adminData){adminData.socmed=[...new Set([...(adminData.socmed||[]),...(data.adminData.socmed||[])])].filter(x=>!deletedIds['socmed::'+x]);adminData.activities=applyTombstones_(mergeByIdentity_(adminData.activities||[],data.adminData.activities||[]));adminData.byb=applyTombstones_(mergeByIdentity_(adminData.byb||[],data.adminData.byb||[]));}if(data.calendarTasks&&typeof calMergeFromSheet==='function')calMergeFromSheet(data.calendarTasks);if(data.hubData&&typeof mergeHubDataFromSheet==='function')mergeHubDataFromSheet(data.hubData);localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingAdminActivity',JSON.stringify(adminData));renderAll();renderAdminActivity();if(!silent)alert('Loaded and merged from sheet. Local data was not erased.')}catch(e){if(!silent)alert('Load failed: '+e.message)}}
+async function pullFromSheet(silent){try{let data=await jsonpSync_({action:'loadAll'});if(!data.ok){if(!silent)alert('Load error: '+syncErrHelp_(data.error||data.message||JSON.stringify(data)));return}applicants=applyTombstones_(mergeByIdentity_(applicants,data.data||[]));if(data.adminData){adminData.socmed=[...new Set([...(adminData.socmed||[]),...(data.adminData.socmed||[])])].filter(x=>!deletedIds['socmed::'+x]);adminData.activities=applyTombstones_(mergeByIdentity_(adminData.activities||[],data.adminData.activities||[]));adminData.byb=applyTombstones_(mergeByIdentity_(adminData.byb||[],data.adminData.byb||[]));}window.__lastPullKeys={hubData:!!data.hubData,calendarTasks:!!data.calendarTasks,adminData:!!data.adminData};
+if((!data.hubData||!data.calendarTasks)&&typeof setSyncStatus==='function'){setSyncStatus('err','LUMANG Apps Script ang deployed \u2014 i-paste ang Code.gs at New Version');}
+if(data.calendarTasks&&typeof calMergeFromSheet==='function')calMergeFromSheet(data.calendarTasks);if(data.hubData&&typeof mergeHubDataFromSheet==='function')mergeHubDataFromSheet(data.hubData);localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingAdminActivity',JSON.stringify(adminData));renderAll();renderAdminActivity();if(!silent)alert('Loaded and merged from sheet. Local data was not erased.')}catch(e){if(!silent)alert('Load failed: '+e.message)}}
 
 function parseCSV(text){
   const rows=[]; let row=[]; let cur=''; let q=false;
@@ -2008,6 +2010,9 @@ function pushHubSoon(){
     if(!navigator.onLine){localStorage.setItem('tjPendingSync','1');setSyncStatus('off',OFFLINE_MSG);return;}
     try{
       setSyncStatus('busy','Syncing...');
+      /* MIRROR FIX: mag-PULL muna (para makuha at ma-merge ang changes ng ibang devices)
+         bago mag-PUSH — para hindi ma-overwrite ng lumang kopya ang bago nilang data */
+      try{await pullFromSheet(true);}catch(e){}
       await pushToSheet(true);
       localStorage.removeItem('tjPendingSync');
       stampSynced_();
@@ -2022,8 +2027,8 @@ async function syncNow(manual){
   syncBusy=true;
   try{
     setSyncStatus('busy','Syncing...');
-    await pushToSheet(true);
     await pullFromSheet(true);
+    await pushToSheet(true);
     localStorage.removeItem('tjPendingSync');
     stampSynced_();
     if(manual)setTimeout(()=>alert('\u2705 Sync complete! Ang lahat ng data sa device na ito ay tugma na sa Google Sheet.'),50);
@@ -2046,6 +2051,38 @@ setInterval(async()=>{
 /* pag bumalik ang internet, i-upload agad ang mga naipong changes */
 window.addEventListener('online',()=>{setSyncStatus('busy','Reconnected \u2014 syncing...');syncNow(false);});
 window.addEventListener('offline',()=>setSyncStatus('off',OFFLINE_MSG));
+/* v9.6 SYNC DOCTOR: chine-check kung ano mismo ang binabalik ng backend */
+async function syncDoctor(){
+  const url=localStorage.getItem('tjLicensingSyncUrl')||'';
+  if(!url){alert('Walang naka-save na Web App URL.');return;}
+  setSyncStatus('busy','Running diagnostic...');
+  let report='\ud83e\ude7a SYNC DOCTOR REPORT\n\n';
+  try{
+    const t=await jsonpSync_({action:'test'});
+    report+='1) Connection: '+(t.ok?'OK \u2705':'FAILED \u274c')+'\n';
+    report+='2) Server version: '+(t.version||'WALA (lumang script!)')+(String(t.version)==='9.2'?' \u2705':' \u26a0\ufe0f DAPAT 9.2 \u2014 i-deploy ang Code.gs.txt (Manage deployments > Edit > New version)')+'\n\n';
+    const d=await jsonpSync_({action:'loadAll'});
+    const hd=d.hubData||{};
+    const chk=(label,ok,extra)=>label+': '+(ok?'\u2705':'\u274c WALA')+(extra||'')+'\n';
+    report+='3) Modules na binabalik ng server:\n';
+    report+=chk('   \u2022 Applicants (Masterlist)',Array.isArray(d.data),' ('+((d.data||[]).length)+' records)');
+    report+=chk('   \u2022 Calendar tasks',Array.isArray(d.calendarTasks),' ('+((d.calendarTasks||[]).length)+')');
+    report+=chk('   \u2022 Pipeline / Admin (BYB)',!!(d.adminData&&Array.isArray(d.adminData.byb)),' ('+(((d.adminData||{}).byb||[]).length)+')');
+    report+=chk('   \u2022 Link Vault',Array.isArray(hd.linkVault),' ('+((hd.linkVault||[]).length)+')');
+    report+=chk('   \u2022 Spiel Vault',Array.isArray(hd.spielVault),' ('+((hd.spielVault||[]).length)+')');
+    report+=chk('   \u2022 Client Details',Array.isArray(hd.clientDetails),' ('+((hd.clientDetails||[]).length)+')');
+    report+=chk('   \u2022 Deleted IDs (tombstones)',!!hd.deletedIds,'');
+    report+='\nLocal counts sa device na ito: Links='+(linkVault||[]).length+', Calendar='+(typeof calTasks!=='undefined'?calTasks.length:0)+', Pipeline='+((adminData.byb||[]).length)+'\n';
+    if(!d.hubData||!d.calendarTasks){
+      report+='\n\u26a0\ufe0f DIAGNOSIS: LUMANG Apps Script pa ang naka-deploy. Ito ang dahilan kung bakit hindi nagmi-mirror ang Link, Calendar, at Pipeline.\nFIX: Buksan ang Code.gs.txt > copy lahat > Extensions > Apps Script > burahin luma > paste > Save > Deploy > Manage deployments > Edit (lapis) > New version > Deploy.';
+      setSyncStatus('err','Lumang backend \u2014 i-update ang Code.gs');
+    }else{
+      report+='\n\u2705 DIAGNOSIS: Kumpleto ang backend! Kung may hindi pa rin nagmi-mirror: (1) i-click ang Sync Now sa BAWAT device, (2) siguraduhing PAREHO ang Web App URL sa lahat ng devices, (3) Ctrl+Shift+R sa bawat device para sariwa ang app version.';
+      setSyncStatus('ok','Diagnostic OK');
+    }
+  }catch(e){report+='\n\u274c ERROR: '+(e.message||e);setSyncStatus('err','Diagnostic failed');}
+  alert(report);
+}
 /* v9.1: Lapse screenshot + Form link para sa agent */
 function h2cLoad_(){
   return new Promise((res,rej)=>{
