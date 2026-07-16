@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TEAM JOSH LICENSING HUB v9.6 — MIRROR FIXED</title>
+<title>TEAM JOSH LICENSING HUB v9.7 — LIVE</title>
 <style>
 :root{--blue:#073b8e;--blue2:#0b5fc7;--navy:#031b45;--gold:#ffd23f;--gold2:#f5b301;--bg:#f4f8ff;--line:#d8e6fb;--text:#172033;--muted:#64748b;--red:#d62839;--green:#0fa968;--orange:#ff8c1a;--purple:#7b2cbf;--cyan:#00a7c7}
 *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,#eef5ff 0%,#fff 60%,#f8fbff 100%)}
@@ -367,7 +367,7 @@ main{max-width:1500px;margin:auto;padding:16px} section{display:none} section.sh
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
-<script id="hubDefaults">window.HUB_DEFAULTS={"syncUrl":"https://script.google.com/macros/s/AKfycbxCIdY4YTfCUSWX1fQ2nXcglVvrDqulkq1qk050VgggFBo5xZZFJaeUzgNtb42yqJ_l/exec","branding":null};</script>
+<script id="hubDefaults">window.HUB_DEFAULTS={"syncUrl":"https://script.google.com/macros/s/AKfycbxbBaccoIl1Ae8gKA3rck65m3pXCwNbLQk_lUfVZxd_yFW9XiukL8nH0DC_rPw6aRz9/exec","branding":null};</script>
 <div id="loginOverlay">
   <div class="login-box">
     <img id="lgLogo" alt="Team Josh" style="display:none;width:150px;max-width:60%;border-radius:16px;margin:0 auto 12px;border:1px solid rgba(212,175,55,.4);box-shadow:0 10px 26px rgba(0,0,0,.35)"><div class="lg-badge" id="lgBadge">TJ</div>
@@ -2551,7 +2551,8 @@ try{
     const savedU=localStorage.getItem('tjLicensingSyncUrl')||'';
     const prevEmbedded=localStorage.getItem('tjEmbeddedUrl')||'';
     /* Adopt embedded URL kung: walang saved, o ang saved ay yung dating embedded (hindi manual na pinalitan) */
-    if(!savedU||savedU===prevEmbedded){
+    var DEAD_URLS=['https://script.google.com/macros/s/AKfycbxCIdY4YTfCUSWX1fQ2nXcglVvrDqulkq1qk050VgggFBo5xZZFJaeUzgNtb42yqJ_l/exec'];
+    if(!savedU||savedU===prevEmbedded||DEAD_URLS.indexOf(savedU)>-1){
       localStorage.setItem('tjLicensingSyncUrl',D.syncUrl);
       if($('syncUrl'))$('syncUrl').value=D.syncUrl;
       if(typeof updateFormLinkBox==='function')updateFormLinkBox();
