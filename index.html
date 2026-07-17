@@ -1,6 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<script id="tjSupabaseBridge">
+/* ============================================================
+   TEAM JOSH ADMIN — SUPABASE CLOUD MIRROR BRIDGE
+   - Keeps the original app/UI and localStorage functions.
+   - Mirrors shared ADMIN datasets to Supabase.
+   - First device uploads existing data if cloud is empty.
+   - New devices download cloud data automatically.
+   ============================================================ */
+(function() {
+  'use strict';
+
+  const SB_URL = "https://jefoxzslxtzknkcuafdt.supabase.co";
+  const SB_KEY = "sb_publishable_KSpZOjMCJuy_2gTJwX9OkA_AZkwdfUx";
+  const TABLE = 'app_state';
+
+  /* Shared ADMIN data only. Device/session-specific values are excluded. */
+  const CLOUD_KEYS = new Set([
+    'tjLicensingApplicants',
+    'tjLicensingLinks',
+    'tjLicensingSpiels',
+    'tjCalendarTasks',
+    'tjClientDetails',
+    'tjLicensingAdminActivity',
+    'tjRookieActivity',
+    'tjRookieTargets',
+    'tjRookieTasks',
+    'tjHubUsers',
+    'tjHubBranding',
+    'tjAnticipatedLapseRows',
+    'tjDeletedIds',
+    'tjLapseReminderTemplate'
+  ]);
+
+  const nativeGet = Storage.prototype.getItem;
+  const nativeSet = Storage.prototype.setItem;
+  const nativeRemove = Storage.prototype.removeItem;
+
+  let cloudReady = false;
+  let suppressCloudWrite = false;
+  let writeTimer = null;
+  const pending = new Map();
+  let lastRemoteStamp = '';
+
+  function isCloudKey(key) {
+    return CLOUD_KEYS.has(String(key || ''));
+  }
+
+  function status(text, kind) {
+    let el = document.getElementById('tjCloudStatus');
+    if (!el && document.body) {
+      el = document.createElement('button');
+      el.id = 'tjCloudStatus';
+      el.type = 'button';
+      el.style.cssText =
+        'position:fixed;right:12px;bottom:12px;z-index:10000;border:0;border-radius:999px;' +
+        'padding:8px 12px;font:800 11px Arial;background:#073b8e;color:#fff;' +
+        'box-shadow:0 6px 18px rgba(3,27,69,.22);cursor:pointer';
+      el.onclick = () => location.reload();
+      document.body.appendChild(el);
+    }
+    if (!el) return;
+    el.textContent = text;
+    el.style.background =
+      kind === 'ok' ? '#0fa968' :
+      kind === 'warn' ? '#f59e0b' :
+      kind === 'error' ? '#d62839' : '#073b8e';
+  }
+
+  async function request(path, options = {}) {
+    const headers = Object.assign({
+      apikey: SB_KEY,
+      Authorization: 'Bearer ' + SB_KEY,
+      'Content-Type': 'application/json'
+    }, options.headers || {});
+    const response = await fetch(SB_URL + '/rest/v1/' + path, Object.assign({}, options, { headers }));
+    if (!response.ok) {
+      const message = await response.text().catch(() => '');
+      throw new Error('Supabase ' + response.status + ': ' + message);
+    }
+    if (response.status === 204) return null;
+    const text = await response.text();
+    return text ? JSON.parse(text) : null;
+  }
+
+  function localSnapshot() {
+    const out = {};
+    CLOUD_KEYS.forEach(key => {
+      const value = nativeGet.call(localStorage, key);
+      if (value !== null) out[key] = value;
+    });
+    return out;
+  }
+
+  async function upsertRows(rows) {
+    if (!rows.length) return;
+    await request(TABLE + '?on_conflict=key', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify(rows)
+    });
+  }
+
+  async function deleteKey(key) {
+    await request(TABLE + '?key=eq.' + encodeURIComponent(key), {
+      method: 'DELETE',
+      headers: { Prefer: 'return=minimal' }
+    });
+  }
+
+  function queueWrite(key, value, removed) {
+    if (!isCloudKey(key) || suppressCloudWrite) return;
+    pending.set(key, { value, removed: !!removed });
+    clearTimeout(writeTimer);
+    writeTimer = setTimeout(flushWrites, 450);
+  }
+
+  async function flushWrites() {
+    if (!cloudReady || !pending.size) return;
+    const batch = Array.from(pending.entries());
+    pending.clear();
+    try {
+      const rows = batch
+        .filter(([, item]) => !item.removed)
+        .map(([key, item]) => ({
+          key,
+          value: { raw: item.value },
+          updated_at: new Date().toISOString()
+        }));
+      if (rows.length) await upsertRows(rows);
+      for (const [key, item] of batch) {
+        if (item.removed) await deleteKey(key);
+      }
+      status('☁ Cloud saved', 'ok');
+    } catch (error) {
+      console.error('[TEAM JOSH CLOUD] Save failed:', error);
+      batch.forEach(([key, item]) => pending.set(key, item));
+      status('⚠ Cloud save failed', 'error');
+    }
+  }
+
+  Storage.prototype.setItem = function(key, value) {
+    nativeSet.call(this, key, value);
+    if (this === localStorage && isCloudKey(key)) queueWrite(String(key), String(value), false);
+  };
+
+  Storage.prototype.removeItem = function(key) {
+    nativeRemove.call(this, key);
+    if (this === localStorage && isCloudKey(key)) queueWrite(String(key), null, true);
+  };
+
+  async function fetchRows() {
+    return await request(TABLE + '?select=key,value,updated_at&order=updated_at.asc');
+  }
+
+  function latestStamp(rows) {
+    return (rows || []).map(r => r.updated_at || '').sort().pop() || '';
+  }
+
+  async function hydrate() {
+    status('☁ Connecting…');
+    try {
+      const rows = await fetchRows();
+      const remote = new Map((rows || []).map(row => [
+        row.key,
+        row.value && typeof row.value === 'object' && 'raw' in row.value
+          ? String(row.value.raw)
+          : JSON.stringify(row.value ?? '')
+      ]));
+      const local = localSnapshot();
+      let changed = false;
+
+      suppressCloudWrite = true;
+
+      /* Cloud data is authoritative when present. */
+      remote.forEach((raw, key) => {
+        if (!isCloudKey(key)) return;
+        if (nativeGet.call(localStorage, key) !== raw) {
+          nativeSet.call(localStorage, key, raw);
+          changed = true;
+        }
+      });
+
+      suppressCloudWrite = false;
+
+      /* One-time migration: upload browser datasets missing from cloud. */
+      const missingRows = [];
+      Object.entries(local).forEach(([key, raw]) => {
+        if (!remote.has(key)) {
+          missingRows.push({
+            key,
+            value: { raw },
+            updated_at: new Date().toISOString()
+          });
+        }
+      });
+      if (missingRows.length) await upsertRows(missingRows);
+
+      cloudReady = true;
+      lastRemoteStamp = latestStamp(rows);
+      status('☁ Cloud connected', 'ok');
+
+      /* Existing app startup may have queued writes. */
+      if (pending.size) flushWrites();
+
+      const hydratedFlag = 'tjSupabaseHydratedV1';
+      if (changed && !sessionStorage.getItem(hydratedFlag)) {
+        sessionStorage.setItem(hydratedFlag, '1');
+        location.reload();
+        return;
+      }
+      sessionStorage.setItem(hydratedFlag, '1');
+      startPolling();
+    } catch (error) {
+      cloudReady = false;
+      console.error('[TEAM JOSH CLOUD] Connection failed:', error);
+      status('⚠ Offline mode', 'error');
+      setTimeout(hydrate, 8000);
+    }
+  }
+
+  async function poll() {
+    if (!cloudReady || document.hidden) return;
+    try {
+      const rows = await fetchRows();
+      const stamp = latestStamp(rows);
+      if (stamp && stamp !== lastRemoteStamp) {
+        lastRemoteStamp = stamp;
+        let changed = false;
+        suppressCloudWrite = true;
+        (rows || []).forEach(row => {
+          if (!isCloudKey(row.key)) return;
+          const raw = row.value && typeof row.value === 'object' && 'raw' in row.value
+            ? String(row.value.raw)
+            : JSON.stringify(row.value ?? '');
+          if (nativeGet.call(localStorage, row.key) !== raw) {
+            nativeSet.call(localStorage, row.key, raw);
+            changed = true;
+          }
+        });
+        suppressCloudWrite = false;
+
+        if (changed) {
+          const active = document.activeElement;
+          const editing = active && /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName);
+          if (!editing) {
+            status('☁ Updating view…', 'warn');
+            setTimeout(() => location.reload(), 350);
+          } else {
+            status('☁ Update available — click', 'warn');
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('[TEAM JOSH CLOUD] Poll failed:', error);
+      status('⚠ Reconnecting…', 'warn');
+    }
+  }
+
+  function startPolling() {
+    setInterval(poll, 7000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) poll();
+    });
+    window.addEventListener('online', hydrate);
+    window.addEventListener('beforeunload', () => {
+      if (pending.size) flushWrites();
+    });
+  }
+
+  /* Start after the page is parsed, while writes are still queued safely. */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hydrate, { once: true });
+  } else {
+    hydrate();
+  }
+})();
+</script>
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>TEAM JOSH LICENSING HUB v9.7 — LIVE</title>
