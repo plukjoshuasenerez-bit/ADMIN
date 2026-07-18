@@ -1332,6 +1332,15 @@ body > .brand{display:none!important}
 }
 </style>
 
+<style id="tjLogoDedupeCss">
+/* Consolidate to ONE logo per view: keep the new sidebar identity (#tjSidebarIdentity)
+   and the public form logo (#tjPublicLogo); hide the older/duplicate logo systems. */
+.tabs-wrap .brand,
+body > .brand{display:none!important}
+#tjStableSidebarBrand{display:none!important}
+#tjStableFormLogo{display:none!important}
+</style>
+
 </head>
 <body>
 
@@ -1429,7 +1438,10 @@ body > .brand{display:none!important}
         <span id="chkZoomLbl" style="font-size:12px;font-weight:1000;color:#34415b;min-width:44px;text-align:center">100%</span>
         <button class="btn-soft btn-small" style="width:34px;font-size:14px;padding:4px 0" onclick="checklistZoom(0.1)" title="Zoom in">+</button>
         <button class="btn-soft btn-small" style="font-size:11px" onclick="checklistZoom(0)" title="Reset">Reset</button>
-      </div></div>
+      </div>
+      <button id="chkShotBtn" onclick="captureChecklistShot()" title="I-save ang checklist bilang larawan" aria-label="Screenshot" style="display:inline-flex;align-items:center;justify-content:center;background:#e6f6fa;border:1px solid #b7e6f0;border-radius:999px;padding:8px;width:42px;height:42px;cursor:pointer">
+        <svg width="22" height="22" viewBox="0 0 48 48" fill="none" style="flex:none"><circle cx="24" cy="24" r="20" stroke="#0794b3" stroke-width="3"/><rect x="15" y="15" width="18" height="18" rx="5" stroke="#0794b3" stroke-width="3"/><circle cx="24" cy="24" r="5" stroke="#0794b3" stroke-width="2.5"/></svg>
+      </button></div>
       <div id="licChecklist"></div>
       <div id="checkCongrats"></div>
     </div>
@@ -2235,7 +2247,6 @@ $('licChecklist').innerHTML=`
       <div class="agent-info"><b>Recruiter</b><span>${esc(a.recruiter||'-')}</span></div>
       <div class="agent-info"><b>Email</b><span>${esc(a.email||'-')}</span></div>
       <div class="agent-info"><b>Mobile Number</b><span>${esc(a.mobile||'-')}</span></div>
-      <button class="tj-camera-only" type="button" onclick="captureChecklistShot()" title="Download checklist image" aria-label="Download checklist image">&#128247;</button>
     </div>
     <div class="check-progress-area">
       <div class="check-progress-label">Progress</div>
@@ -3396,7 +3407,6 @@ function applyBranding(b){
   if(b.tagline){tagEl.textContent=b.tagline;tagEl.classList.add('bshow');}
   else{tagEl.textContent=BRAND_ORIG.tag;tagEl.classList.remove('bshow');}
   if(b.logo){logoEl.src=b.logo;logoEl.style.display='block';}
-  else if(b.teamName){logoEl.style.display='none';}
   else{logoEl.src=BRAND_ORIG.logo;logoEl.style.display='block';}
 }
 function loadBrandingAndApply(){const b=getBranding();if(b)applyBranding(b);}
@@ -3622,6 +3632,7 @@ document.addEventListener('DOMContentLoaded',initLapseUi_);
 </script>
 
 
+<script>try{if(!window.TJ_DEFAULT_LOGO){var _tjbl=document.getElementById('brandLogo');window.TJ_DEFAULT_LOGO=(_tjbl&&_tjbl.getAttribute('src'))||'';}}catch(e){}</script>
 <script id="tjStableSetupScript">
 (function(){
 'use strict';
@@ -3932,6 +3943,7 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
     const team=document.getElementById('tjSidebarTeam');
     if(logo){
       if(b.logo){logo.src=b.logo;logo.style.display='block';}
+      else if(window.TJ_DEFAULT_LOGO){logo.src=window.TJ_DEFAULT_LOGO;logo.style.display='block';}
       else{logo.removeAttribute('src');logo.style.display='none';}
     }
     if(team)team.textContent=b.name||'ADMIN';
@@ -4007,6 +4019,10 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
     if(branding.logo){
       const logo=document.getElementById('tjPublicLogo');
       logo.src=branding.logo;
+      logo.style.display='block';
+    }else if(window.TJ_DEFAULT_LOGO){
+      const logo=document.getElementById('tjPublicLogo');
+      logo.src=window.TJ_DEFAULT_LOGO;
       logo.style.display='block';
     }
 
@@ -4490,6 +4506,9 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
       if(b.logo){
         logo.src=b.logo;
         logo.style.display='block';
+      }else if(window.TJ_DEFAULT_LOGO){
+        logo.src=window.TJ_DEFAULT_LOGO;
+        logo.style.display='block';
       }else{
         logo.removeAttribute('src');
         logo.style.display='none';
@@ -4747,6 +4766,9 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
     if(logo){
       if(b.logo){
         logo.src=b.logo;
+        logo.style.display='block';
+      }else if(window.TJ_DEFAULT_LOGO){
+        logo.src=window.TJ_DEFAULT_LOGO;
         logo.style.display='block';
       }else{
         logo.removeAttribute('src');
@@ -5122,6 +5144,238 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
   }
 
   document.addEventListener('tj:mirror-updated',upgradeCameraButton);
+})();
+</script>
+
+
+<script id="tjStableBrandingRepair">
+(function(){
+  'use strict';
+
+  const STORE='tjStableBranding';
+  const SB_URL='https://jefoxzslxtzknkcuafdt.supabase.co';
+  const SB_KEY='sb_publishable_KSpZOjMCJuy_2gTJwX9OkA_AZkwdfUx';
+  let pendingLogo='';
+
+  function byId(id){ return document.getElementById(id); }
+
+  function getLocal(){
+    try{return JSON.parse(localStorage.getItem(STORE)||'null');}
+    catch(e){return null;}
+  }
+
+  function setLocal(value){
+    try{localStorage.setItem(STORE,JSON.stringify(value));}
+    catch(e){console.error('Local branding save failed',e);}
+  }
+
+  async function getCloud(){
+    try{
+      const r=await fetch(SB_URL+'/rest/v1/app_state?key=eq.'+STORE+'&select=value',{
+        headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},
+        cache:'no-store'
+      });
+      if(!r.ok)return null;
+      const rows=await r.json();
+      if(!rows.length)return null;
+      const v=rows[0].value;
+      if(v&&typeof v.raw==='string')return JSON.parse(v.raw);
+      return v;
+    }catch(e){return null;}
+  }
+
+  async function setCloud(value){
+    try{
+      await fetch(SB_URL+'/rest/v1/app_state?on_conflict=key',{
+        method:'POST',
+        headers:{
+          apikey:SB_KEY,
+          Authorization:'Bearer '+SB_KEY,
+          'Content-Type':'application/json',
+          Prefer:'resolution=merge-duplicates,return=minimal'
+        },
+        body:JSON.stringify([{
+          key:STORE,
+          value:{raw:JSON.stringify(value)},
+          updated_at:new Date().toISOString()
+        }])
+      });
+    }catch(e){console.error('Cloud branding save failed',e);}
+  }
+
+  function ensureSidebarLogo(){
+    const wrap=document.querySelector('.tabs-wrap');
+    const tabs=wrap&&wrap.querySelector('.tabs');
+    if(!wrap||!tabs)return;
+
+    let box=byId('tjStableSidebarBrand');
+    if(!box){
+      box=document.createElement('div');
+      box.id='tjStableSidebarBrand';
+      box.style.cssText='padding:14px;text-align:center;';
+      box.innerHTML=
+        '<img id="tjStableSidebarLogo" alt="Logo" style="display:none;max-width:160px;max-height:75px;margin:0 auto 8px;object-fit:contain;">'+
+        '<div id="tjStableSidebarName" style="font-weight:800;font-size:17px;">TEAM JOSH</div>';
+      wrap.insertBefore(box,tabs);
+    }
+  }
+
+  function ensureFormLogo(){
+    const root=byId('publicFormPage')||
+      document.querySelector('.public-form-page,[data-page="form"],.application-form');
+    if(!root)return;
+
+    let img=byId('tjStableFormLogo');
+    if(!img){
+      img=document.createElement('img');
+      img.id='tjStableFormLogo';
+      img.alt='Logo';
+      img.style.cssText='display:none;max-width:180px;max-height:90px;margin:0 auto 14px;object-fit:contain;';
+      const heading=root.querySelector('h1,h2,.form-title,.tj-public-title');
+      if(heading)heading.parentNode.insertBefore(img,heading);
+      else root.prepend(img);
+    }
+  }
+
+  function showImage(img,src){
+    if(!img)return;
+    if(src){
+      img.src=src;
+      img.style.display='block';
+      img.style.visibility='visible';
+      img.style.opacity='1';
+    }else{
+      img.removeAttribute('src');
+      img.style.display='none';
+    }
+  }
+
+  function apply(value){
+    if(!value)return;
+    ensureSidebarLogo();
+    ensureFormLogo();
+
+    const team=value.teamName||'TEAM JOSH';
+    const logo=value.logo||'';
+
+    const sideName=byId('tjStableSidebarName');
+    if(sideName)sideName.textContent=team;
+    const _tjLogoF=logo||window.TJ_DEFAULT_LOGO||'';
+    showImage(byId('tjStableSidebarLogo'),_tjLogoF);
+    showImage(byId('tjStableFormLogo'),_tjLogoF);
+
+    // Existing placeholders
+    showImage(byId('tjSidebarLogo'),_tjLogoF);
+    showImage(byId('tjPublicLogo'),_tjLogoF);
+    showImage(byId('brLogoPrev'),logo);
+
+    if(byId('tjSidebarTeam'))byId('tjSidebarTeam').textContent=team;
+    if(byId('brTeamName'))byId('brTeamName').value=team;
+    if(byId('brTag'))byId('brTag').value=value.tagline||'';
+    if(byId('brC1')&&value.primary)byId('brC1').value=value.primary;
+    if(byId('brC2')&&value.accent)byId('brC2').value=value.accent;
+
+    if(value.primary)document.documentElement.style.setProperty('--blue',value.primary);
+    if(value.accent)document.documentElement.style.setProperty('--gold',value.accent);
+  }
+
+  function compress(file){
+    return new Promise(function(resolve,reject){
+      const reader=new FileReader();
+      reader.onerror=function(){reject(new Error('Hindi mabasa ang logo.'));};
+      reader.onload=function(){
+        const img=new Image();
+        img.onerror=function(){reject(new Error('JPG o PNG lang ang gamitin.'));};
+        img.onload=function(){
+          const max=360;
+          const ratio=Math.min(1,max/Math.max(img.width,img.height));
+          const canvas=document.createElement('canvas');
+          canvas.width=Math.max(1,Math.round(img.width*ratio));
+          canvas.height=Math.max(1,Math.round(img.height*ratio));
+          canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+          let quality=.8;
+          let data=canvas.toDataURL('image/jpeg',quality);
+          while(data.length>140000&&quality>.4){
+            quality-=.08;
+            data=canvas.toDataURL('image/jpeg',quality);
+          }
+          resolve(data);
+        };
+        img.src=reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.addEventListener('change',async function(e){
+    if(e.target&&e.target.id==='brLogoFile'){
+      const file=e.target.files&&e.target.files[0];
+      if(!file)return;
+      try{
+        pendingLogo=await compress(file);
+        showImage(byId('brLogoPrev'),pendingLogo);
+      }catch(err){alert(err.message);}
+    }
+  });
+
+  document.addEventListener('click',async function(e){
+    const btn=e.target.closest('button');
+    if(!btn)return;
+    if(!/save personalization/i.test((btn.textContent||'').trim()))return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const old=btn.textContent;
+    btn.disabled=true;
+    btn.textContent='Saving…';
+
+    try{
+      const previous=getLocal()||await getCloud()||{};
+      const value={
+        teamName:(byId('brTeamName')&&byId('brTeamName').value.trim())||'TEAM JOSH',
+        tagline:(byId('brTag')&&byId('brTag').value.trim())||'',
+        primary:(byId('brC1')&&byId('brC1').value)||'#073b8e',
+        accent:(byId('brC2')&&byId('brC2').value)||'#ffd23f',
+        logo:pendingLogo||previous.logo||''
+      };
+
+      setLocal(value);
+      await setCloud(value);
+      pendingLogo='';
+      apply(value);
+      alert('Logo at Team Name saved.');
+    }catch(err){
+      alert('Hindi na-save: '+err.message);
+    }finally{
+      btn.disabled=false;
+      btn.textContent=old;
+    }
+  },true);
+
+  async function init(){
+    ensureSidebarLogo();
+    ensureFormLogo();
+    const local=getLocal();
+    if(local)apply(local);
+    const cloud=await getCloud();
+    if(cloud){
+      setLocal(cloud);
+      apply(cloud);
+    }
+    setInterval(function(){
+      ensureSidebarLogo();
+      ensureFormLogo();
+      const value=getLocal();
+      if(value)apply(value);
+    },1500);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init,{once:true});
+  }else{
+    init();
+  }
 })();
 </script>
 
