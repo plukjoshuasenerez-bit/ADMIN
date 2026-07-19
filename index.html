@@ -223,13 +223,13 @@
     }
   }
 
-  async function poll() {
-    if (!cloudReady || document.hidden) return;
+  async function poll(force) {
+    if (!cloudReady || (document.hidden && !force)) return;
     try {
       const rows = await fetchRows();
       const stamp = latestStamp(rows);
-      if (stamp && stamp !== lastRemoteStamp) {
-        lastRemoteStamp = stamp;
+      if (force || (stamp && stamp !== lastRemoteStamp)) {
+        lastRemoteStamp = stamp || lastRemoteStamp;
         let changed = false;
         suppressCloudWrite = true;
         (rows || []).forEach(row => {
@@ -244,12 +244,16 @@
         });
         suppressCloudWrite = false;
 
-        if (changed) {
+        if (changed || force) {
           const active = document.activeElement;
           const editing = active && /^(INPUT|TEXTAREA|SELECT)$/.test(active.tagName);
-          if (!editing) {
-            status('☁ Updating view…', 'warn');
-            setTimeout(() => location.reload(), 350);
+          if (!editing || force) {
+            status('☁ Synced', 'ok');
+            if (typeof window.softSyncApply === 'function') {
+              window.softSyncApply();
+            } else {
+              setTimeout(() => location.reload(), 350);
+            }
           } else {
             status('☁ Update available — click', 'warn');
           }
@@ -262,15 +266,15 @@
   }
 
   function startPolling() {
-    setInterval(poll, 7000);
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) poll();
-    });
+    /* Auto-pull DISABLED (manual refresh only) to prevent lag.
+       Pushing/saving still works; only the periodic PULL is turned off. */
     window.addEventListener('online', hydrate);
     window.addEventListener('beforeunload', () => {
       if (pending.size) flushWrites();
     });
   }
+  /* Expose a forced pull for the manual Refresh button. */
+  window.tjCloudPull = function () { return poll(true); };
 
   /* Start after the page is parsed, while writes are still queued safely. */
   if (document.readyState === 'loading') {
@@ -1080,6 +1084,13 @@ body > .brand{display:none!important}
     background:#fff!important;
     border-bottom:1px solid var(--tj-sidebar-line)!important;
   }
+  #tjSidebarIdentity img{
+    max-width:140px!important;
+    max-height:42px!important;
+    width:auto!important;
+    height:auto!important;
+    object-fit:contain!important;
+  }
   #tjSidebarIdentity strong{
     color:var(--tj-sidebar-muted)!important;
   }
@@ -1341,6 +1352,18 @@ body > .brand{display:none!important}
 #tjStableFormLogo{display:none!important}
 </style>
 
+<style id="tjScrollPerfCss">
+/* Faster scrolling on big tables: the browser skips painting rows that are off-screen. */
+.client-list-table tbody tr,
+.lapse-table tbody tr,
+#masterTable tbody tr{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 52px;
+}
+/* Keep floating/fixed controls on their own layer so they don't repaint the whole page while scrolling. */
+#tjManualRefreshBtn,#syncChip{will-change:transform;transform:translateZ(0)}
+</style>
+
 </head>
 <body>
 
@@ -1573,7 +1596,7 @@ body > .brand{display:none!important}
       <div class="field"><label>Upload Anticipated Lapse PDF</label><input id="lapsePdfFile" type="file" accept="application/pdf" onchange="uploadAnticipatedLapsePdf(event)"></div>
       <div class="field"><label>Agent Filter</label><select id="lapseAgentFilter" onchange="renderLapseReport()"><option value="">All Agents</option></select></div>
       <div class="field"><label>Search Client / Policy</label><input id="lapseSearch" placeholder="Search name or policy number" oninput="renderLapseReport()"></div>
-      <div class="tools"><button class="btn-yellow" onclick="lapseScreenshot()">&#128248; Screenshot</button><button class="btn-red" onclick="clearLapseReport()">Clear Report</button></div>
+      <div class="tools"><button onclick="lapseScreenshot()" title="Screenshot" aria-label="Screenshot" style="display:inline-flex;align-items:center;justify-content:center;background:#e6f6fa;border:1px solid #b7e6f0;border-radius:999px;padding:8px;width:42px;height:42px;cursor:pointer;vertical-align:middle"><svg width="22" height="22" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#0794b3" stroke-width="3"/><rect x="15" y="15" width="18" height="18" rx="5" stroke="#0794b3" stroke-width="3"/><circle cx="24" cy="24" r="5" stroke="#0794b3" stroke-width="2.5"/></svg></button><button class="btn-red" onclick="clearLapseReport()">Clear Report</button></div>
     </div>
     <div id="lapseStatus" class="note" style="margin-bottom:10px">No PDF uploaded yet.</div>
     <div id="lapseShotArea" style="background:#fff;padding:6px;border-radius:12px">
@@ -1687,6 +1710,19 @@ body > .brand{display:none!important}
 </section>
 </main>
 <datalist id="recruiterList"></datalist>
+<script id="tjEarlyTabRestore">
+(function(){try{
+  var saved=localStorage.getItem('tjActiveTab');
+  if(!saved||saved==='formTab')return;
+  var sec=document.getElementById(saved);
+  var tabs=document.querySelectorAll('.tab');
+  if(!sec||!tabs.length)return;
+  document.querySelectorAll('main > section, section').forEach(function(s){s.classList.remove('show');});
+  sec.classList.add('show');
+  tabs.forEach(function(t){t.classList.remove('active');if((t.getAttribute('onclick')||'').indexOf("'"+saved+"'")>-1)t.classList.add('active');});
+  window.currentTabId=saved;
+}catch(e){}})();
+</script>
 <script>
 const $=id=>document.getElementById(id); const DOCS=['Proof of TIN','Proof of SSS','Valid ID','1x1 Photo','Corpo Photo','E-sign','CAAP']; const TRAINS=['Rookie Onboarding (After exam)','ILT 1 (Pru Expert)','ILT 2 (Pru Expert)','Prospect 30','Basic Training Course (Sat)','Rookie Training 1 (Sat)','Rookie Training 2 (Sat)','Pruone & 1 Pager','Revalida']; const STAGES=['New Applicant','Debriefing','Exam Registration','Exam Scheduled','Passed Exam','Licensing','Training','Coded'];
 let applicants=[],editingId=null;
@@ -1713,10 +1749,33 @@ function saveApplicant(){let o=getForm();if(!o.name){alert('Complete Name is req
 function stampRec_(o){o.updatedAt=new Date().toISOString();o.deviceId=(window.HUB_DEVICE_ID||'');return o;}
 function saveAll(){localStorage.setItem('tjLicensingApplicants',JSON.stringify(applicants));localStorage.setItem('tjLicensingSyncUrl',$('syncUrl')?.value||'');renderAll();if(typeof pushHubSoon==='function')pushHubSoon();}
 function loadAll(){try{applicants=JSON.parse(localStorage.getItem('tjLicensingApplicants')||'[]')}catch(e){applicants=[]}renderAll();}
+window.softSyncApply=function(){
+  try{loadVaults();}catch(e){}
+  try{loadClientDetails();}catch(e){}
+  try{loadRookieData();}catch(e){}
+  try{loadAdminActivity();}catch(e){}
+  try{if(typeof loadCalTasks==='function')loadCalTasks();}catch(e){}
+  try{anticipatedLapseRows=JSON.parse(localStorage.getItem('tjAnticipatedLapseRows')||'[]')||[];}catch(e){}
+  try{loadAll();}catch(e){}
+  try{if(typeof renderAdminActivity==='function')renderAdminActivity();}catch(e){}
+  try{if(typeof renderCalendar==='function')renderCalendar();}catch(e){}
+  try{if(typeof renderLapseReport==='function')renderLapseReport();}catch(e){}
+};
+window.tjManualRefresh=async function(btn){
+  var lbl=document.getElementById('tjRefreshLabel');
+  var ico=document.getElementById('tjRefreshIcon');
+  try{if(btn){btn.disabled=true;}if(lbl){lbl.textContent='Syncing\u2026';}if(ico){ico.style.animation='tjSpin 0.8s linear infinite';}}catch(e){}
+  try{if(typeof window.tjCloudPull==='function'){await window.tjCloudPull();}}catch(e){}
+  try{if(typeof window.tjBrandCloudPull==='function'){await window.tjBrandCloudPull();}}catch(e){}
+  try{if(typeof pullFromSheet==='function'&&localStorage.getItem('tjLicensingSyncUrl')){await pullFromSheet(true);}}catch(e){}
+  try{if(typeof window.softSyncApply==='function'){window.softSyncApply();}}catch(e){}
+  try{if(ico){ico.style.animation='';}if(btn){btn.disabled=false;}if(lbl){lbl.textContent='Synced \u2713';}}catch(e){}
+  try{setTimeout(function(){if(lbl)lbl.textContent='Refresh';},1500);}catch(e){}
+};
 function clearForm(){editingId=null;setForm({team:'JOSHUA SENEREZ',retake:'0'});}
 function editApplicant(id){let a=applicants.find(x=>x.id===id);if(a){setForm(a);showTab('formTab',document.querySelectorAll('.tab')[0]);openApplicantModal();window.scrollTo({top:0,behavior:'smooth'})}}
 function delApplicant(id){if(confirm('Delete this applicant?')){applicants=applicants.filter(a=>a.id!==id);markDeleted(id);saveAll();clearForm();}}
-function showTab(id,btn){window.currentTabId=id;document.querySelectorAll('section').forEach(s=>s.classList.remove('show'));$(id).classList.add('show');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderAll();if(id==='adminTab'||id==='bybPipelineTab')renderAdminActivity();if(id==='rookieTab')renderRookieChallenge();}
+function showTab(id,btn){window.currentTabId=id;try{localStorage.setItem('tjActiveTab',id)}catch(e){}document.querySelectorAll('section').forEach(s=>s.classList.remove('show'));$(id).classList.add('show');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');renderAll();if(id==='adminTab'||id==='bybPipelineTab')renderAdminActivity();if(id==='rookieTab')renderRookieChallenge();}
 function stageOf(a){if(a.stage)return a.stage;if(a.codingDate)return'Coded';if(a.licensingStatus==='Approved')return'Training';if((a.examResult||'').includes('Pass'))return'Licensing';if(a.examDate)return'Exam Scheduled';if(a.examFee==='Paid')return'Exam Registration';if(a.debriefStatus==='Done')return'Exam Registration';if(a.debriefDate)return'Debriefing';return'New Applicant'}
 function daysSince(a){let d=a.lastUpdated||a.dateSaved;return d?Math.max(0,Math.floor((new Date()-new Date(d))/86400000)):0} function delayPill(a){let d=daysSince(a),s=stageOf(a);if(s==='Coded')return'<span class="pill green">Done</span>';if(d>=30)return'<span class="pill red">Delayed</span>';if(d>=14)return'<span class="pill orange">Watch</span>';return'<span class="pill blue">On Track</span>'}
 
@@ -3023,8 +3082,9 @@ async function syncNow(manual){
     if(manual)alert('Sync failed: '+(e.message||e));
   }finally{syncBusy=false;}
 }
-/* auto-refresh bawat 30 segundo: pull lang, walang buong page reload */
+/* auto-refresh DISABLED (manual refresh only) para walang lag */
 setInterval(async()=>{
+  return; /* Google Sheet auto-pull OFF — gamitin ang manual Refresh button */
   if(document.hidden||syncBusy)return;
   if(!localStorage.getItem('tjLicensingSyncUrl'))return;
   if(Date.now()-lastLocalChangeAt<8000)return; /* huwag i-override ang kaka-type lang */
@@ -4436,10 +4496,12 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
   function start(){
     setCloudflareStatus();
     pullCloud();
+    /* Auto-pull DISABLED (manual refresh only). Keep pushing pending writes. */
     setInterval(function(){
       flushPending();
-      pullCloud();
     },5000);
+    /* Expose branding/logo cloud pull for the manual Refresh button. */
+    window.tjBrandCloudPull = pullCloud;
   }
 
   if(document.readyState==='loading'){
@@ -5377,6 +5439,38 @@ document.addEventListener('DOMContentLoaded',function(){moveUi();refresh();var o
     init();
   }
 })();
+</script>
+
+<script id="tjTabPersist">
+document.addEventListener('DOMContentLoaded',function(){
+  setTimeout(function(){
+    try{
+      var saved=localStorage.getItem('tjActiveTab');
+      if(!saved||saved==='formTab')return;
+      var sec=document.getElementById(saved);
+      var btn=document.querySelector('.tab[onclick*="'+saved+'"]');
+      if(sec&&btn&&typeof window.showTab==='function'){window.showTab(saved,btn);}
+    }catch(e){}
+  },60);
+});
+</script>
+
+<style id="tjManualRefreshCss">
+@keyframes tjSpin{to{transform:rotate(360deg)}}
+#tjManualRefreshBtn{position:fixed;bottom:16px;right:16px;z-index:400;display:flex;align-items:center;gap:8px;background:#0794b3;color:#fff;border:none;border-radius:999px;padding:11px 16px;font-weight:1000;font-size:13px;cursor:pointer;box-shadow:0 8px 20px rgba(3,27,69,.25)}
+#tjManualRefreshBtn:hover{background:#0a7f9c}
+#tjManualRefreshBtn:disabled{opacity:.7;cursor:default}
+</style>
+<button id="tjManualRefreshBtn" onclick="tjManualRefresh(this)" title="I-refresh ang data mula cloud" aria-label="Refresh">
+  <svg id="tjRefreshIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 0-14-5L4 9"/><path d="M4 4v5h5"/><path d="M4 12a8 8 0 0 0 14 5l2-2"/><path d="M20 20v-5h-5"/></svg>
+  <span id="tjRefreshLabel">Refresh</span>
+</button>
+<script id="tjManualRefreshGuard">
+(function(){try{
+  var isForm=new URLSearchParams(location.search).get('page')==='form';
+  var b=document.getElementById('tjManualRefreshBtn');
+  if(b&&isForm)b.style.display='none';
+}catch(e){}})();
 </script>
 
 </body>
